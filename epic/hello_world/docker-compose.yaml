@@ -1,5 +1,0 @@
-services:
-  hello_world:
-    image: alpine
-    container_name: hello-world
-    command: sh -c "while true; do echo 'Hello, World!'; sleep 5; done"

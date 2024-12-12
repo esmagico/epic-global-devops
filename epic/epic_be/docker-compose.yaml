@@ -1,0 +1,9 @@
+services:
+  epic_global_backend:
+      image: ghcr.io/${org}/epic-global-backend:${DEMO_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      restart: always
+      environment:
+        DB_HOST: ${DB_HOST:?DB_HOST is not set}
+        DB_NAME: ${DB_NAME:?DB_NAME is not set}
+        DB_USER: ${DB_USER:?DB_USER is not set}
+        DB_PASS: ${DB_PASS:?DB_PASS is not set}
