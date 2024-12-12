@@ -1,6 +1,6 @@
 include:
 #  - ./common/monitoring/docker-compose.yaml
- - ./common/minio/docker-compose.yaml
+#  - ./common/minio/docker-compose.yaml
  - ./common/environment/docker-compose.yaml
   # - ./common/uptime/docker-compose.yaml
 #  - ./common/clickhouse/docker-compose.yaml
