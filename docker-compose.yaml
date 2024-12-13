@@ -2,14 +2,15 @@ include:
 #  - ./common/monitoring/docker-compose.yaml
  - ./common/minio/docker-compose.yaml
  - ./common/environment/docker-compose.yaml
-  # - ./common/uptime/docker-compose.yaml
+ - ./common/uptime/docker-compose.yaml
 #  - ./common/clickhouse/docker-compose.yaml
 #  - ./common/redis/docker-compose.yaml
  - ./common/db/docker-compose.yaml
 #  - ./common/registry/docker-compose.yaml
-#  - ./common/rabbitmq/docker-compose.yaml
+ - ./common/rabbitmq/docker-compose.yaml
  - ./common/kong/docker-compose.yaml
-#  - ./common/pgweb/docker-compose.yaml
+ - ./common/pgweb/docker-compose.yaml
+#  - ./common/hello_world/docker-compose.yaml
  - ./epic/docker-compose.yaml
 
 services:
@@ -17,9 +18,8 @@ services:
     extends:
       file: common/caddy/docker-compose.yaml
       service: caddy
-#    volumes:
-#      - project-specific-volume-mappings:/etc/caddy/project-name
-
+    volumes:
+     - ./epic:/etc/caddy/epic
 
 volumes:
   caddy_data:

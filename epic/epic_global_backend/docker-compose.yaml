@@ -2,6 +2,8 @@ services:
   epic_global_backend:
       image: ghcr.io/${org}/epic-global-backend:${DEMO_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
+      ports:
+        - 3000:3000
       environment:
         DB_HOST: ${DB_HOST:?DB_HOST is not set}
         DB_NAME: ${DB_NAME:?DB_NAME is not set}
