@@ -24,7 +24,7 @@ services:
     - name: backend_route
       expression: 'http.path ^= "/api" '
   
-  - name: epic_global_backend
+  - name: epic_global_frontend
     url: http://epic_global_frontend:3000
     routes:
     - name: frontend_route
