@@ -1,0 +1,6 @@
+services:
+  epic_global_frontend:
+      image: ghcr.io/${org}/epic-global-frontend:${EPIC_GLOBAL_FRONTEND_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      restart: always
+      environment:
+        NEXT_PUBLIC_EPIC_BASE_URL: ${NEXT_PUBLIC_EPIC_BASE_URL}
