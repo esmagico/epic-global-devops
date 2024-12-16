@@ -1,0 +1,3 @@
+{$DOMAIN_SCHEME}://ai.{$DOMAIN_NAME} {
+    reverse_proxy epic_global_ai:5000
+}

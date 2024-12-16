@@ -11,12 +11,15 @@ plugins:
       bandwidth_metrics: true
       upstream_health_metrics: true
 
-# services:
-  # - name: bff
-  #   url: http://bff:3000
-  #   routes:
-  #   - name: bff_route
-  #     expression: 'http.path ^= "/bff" '
+services:
+  - name: epic_global_ai
+    url: http://epic_global_ai:5000
+    routes:
+    - name: ai_route
+      expression: 'http.path ^= "/ai" '
 
-
-    
+  - name: epic_global_backend
+    url: http://epic_global_backend:3000
+    routes:
+    - name: backend_route
+      expression: 'http.path ^= "/api" '

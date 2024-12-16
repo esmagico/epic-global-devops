@@ -1,0 +1,6 @@
+services:
+  epic_global_ai:
+      image: ghcr.io/${org}/epic-global-ai-services:${DEMO_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      restart: always
+      environment:
+        GOOGLE_AI_API_KEY: ${GOOGLE_AI_API_KEY:?GOOGLE_AI_API_KEY is not set}

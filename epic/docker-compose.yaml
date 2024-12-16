@@ -1,2 +1,3 @@
 include:
   - ./epic_global_backend/docker-compose.yaml
+  - ./epic_global_ai/docker-compose.yaml
