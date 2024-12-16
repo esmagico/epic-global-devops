@@ -1,2 +1,3 @@
 import ./epic_global_backend/Caddyfile
 import ./epic_global_ai/Caddyfile
+import ./epic_global_frontend/Caddyfile
