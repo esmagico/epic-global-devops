@@ -10,7 +10,7 @@ include:
  - ./common/rabbitmq/docker-compose.yaml
  - ./common/kong/docker-compose.yaml
  - ./common/pgweb/docker-compose.yaml
-#  - ./common/hello_world/docker-compose.yaml
+ - ./common/hasura/docker-compose.yaml
  - ./epic/docker-compose.yaml
 
 services:
