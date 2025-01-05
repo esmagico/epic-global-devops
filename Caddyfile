@@ -1,4 +1,4 @@
-#import ./common/monitoring/Caddyfile
+import ./common/monitoring/Caddyfile
 import ./common/minio/Caddyfile
 import ./common/hasura/Caddyfile
 import ./common/environment/Caddyfile
