@@ -19,13 +19,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 3,
+  "id": 10,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -93,83 +93,11 @@
                 }
               }
             ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Label"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 142
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Working dir"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 230
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Service"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 170
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Registry Image"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 284
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Instance"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 170
-              }
-            ]
-          },
-          {
-            "matcher": {
-              "id": "byName",
-              "options": "Name"
-            },
-            "properties": [
-              {
-                "id": "custom.width",
-                "value": 121
-              }
-            ]
           }
         ]
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 20,
         "x": 0,
         "y": 0
@@ -188,12 +116,12 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "(time() - container_start_time_seconds{instance=~\"$host\",name=~\"$container\",name=~\".+\"})/86400",
           "format": "table",
@@ -243,7 +171,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -268,7 +196,7 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 8,
+        "h": 10,
         "w": 4,
         "x": 20,
         "y": 0
@@ -291,17 +219,22 @@
         "textMode": "auto",
         "wideLayout": true
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
+          "datasource": {
+            "type": "prometheus",
+            "uid": "PBFA97CFB590B2093"
+          },
           "editorMode": "code",
           "expr": "count(count(container_last_seen) by (name))",
+          "instant": false,
           "legendFormat": "__auto",
           "range": true,
           "refId": "A"
         }
       ],
-      "title": "No. of containers",
+      "title": "Panel Title",
       "type": "stat"
     },
     {
@@ -310,7 +243,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 8
+        "y": 10
       },
       "id": 8,
       "panels": [],
@@ -320,7 +253,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -379,10 +312,10 @@
         "overrides": []
       },
       "gridPos": {
-        "h": 7,
+        "h": 10,
         "w": 24,
         "x": 0,
-        "y": 9
+        "y": 11
       },
       "id": 15,
       "options": {
@@ -401,12 +334,12 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "sum(rate(container_cpu_usage_seconds_total{instance=~\"$host\",name=~\"$container\",name=~\".+\"}[5m])) by (name) *100",
           "hide": false,
@@ -424,7 +357,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 16
+        "y": 21
       },
       "id": 11,
       "panels": [],
@@ -434,7 +367,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -490,38 +423,13 @@
           },
           "unit": "bytes"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "cadvisor"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 17
+        "y": 22
       },
       "id": 9,
       "options": {
@@ -540,12 +448,12 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "sum(container_memory_rss{instance=~\"$host\",name=~\"$container\",name=~\".+\"}) by (name)",
           "hide": false,
@@ -560,7 +468,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -616,38 +524,13 @@
           },
           "unit": "bytes"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "cadvisor"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 17
+        "y": 22
       },
       "id": 14,
       "options": {
@@ -666,12 +549,12 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "sum(container_memory_cache{instance=~\"$host\",name=~\"$container\",name=~\".+\"}) by (name)",
           "hide": false,
@@ -689,7 +572,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 25
+        "y": 30
       },
       "id": 2,
       "panels": [],
@@ -699,7 +582,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -744,8 +627,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -755,38 +637,13 @@
           },
           "unit": "Bps"
         },
-        "overrides": [
-          {
-            "__systemRef": "hideSeriesFrom",
-            "matcher": {
-              "id": "byNames",
-              "options": {
-                "mode": "exclude",
-                "names": [
-                  "cadvisor"
-                ],
-                "prefix": "All except:",
-                "readOnly": true
-              }
-            },
-            "properties": [
-              {
-                "id": "custom.hideFrom",
-                "value": {
-                  "legend": false,
-                  "tooltip": false,
-                  "viz": true
-                }
-              }
-            ]
-          }
-        ]
+        "overrides": []
       },
       "gridPos": {
         "h": 8,
         "w": 12,
         "x": 0,
-        "y": 26
+        "y": 31
       },
       "id": 4,
       "options": {
@@ -805,12 +662,12 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "sum(rate(container_network_receive_bytes_total{instance=~\"$host\",name=~\"$container\",name=~\".+\"}[5m])) by (name)",
           "hide": false,
@@ -825,7 +682,7 @@
     {
       "datasource": {
         "type": "prometheus",
-        "uid": "de92bkkebr0u8e"
+        "uid": "PBFA97CFB590B2093"
       },
       "fieldConfig": {
         "defaults": {
@@ -870,8 +727,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -887,7 +743,7 @@
         "h": 8,
         "w": 12,
         "x": 12,
-        "y": 26
+        "y": 31
       },
       "id": 6,
       "options": {
@@ -906,12 +762,12 @@
           "sort": "none"
         }
       },
-      "pluginVersion": "11.4.0",
+      "pluginVersion": "11.3.2",
       "targets": [
         {
           "datasource": {
             "type": "prometheus",
-            "uid": "de92bkkebr0u8e"
+            "uid": "PBFA97CFB590B2093"
           },
           "expr": "sum(rate(container_network_transmit_bytes_total{instance=~\"$host\",name=~\"$container\",name=~\".+\"}[5m])) by (name)",
           "interval": "",
@@ -928,7 +784,7 @@
         "h": 1,
         "w": 24,
         "x": 0,
-        "y": 34
+        "y": 39
       },
       "id": 19,
       "panels": [],
@@ -937,6 +793,7 @@
     }
   ],
   "preload": false,
+  "refresh": "",
   "schemaVersion": 40,
   "tags": [
     "cadvisor",
@@ -950,7 +807,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "de92bkkebr0u8e",
+        "datasource": "PBFA97CFB590B2093",
         "definition": "label_values({__name__=~\"container.*\"},instance)",
         "includeAll": true,
         "label": "Host",
@@ -971,7 +828,7 @@
           "text": "All",
           "value": "$__all"
         },
-        "datasource": "de92bkkebr0u8e",
+        "datasource": "PBFA97CFB590B2093",
         "definition": "label_values({__name__=~\"container.*\", instance=~\"$host\"},name)",
         "includeAll": true,
         "label": "Container",
@@ -993,8 +850,8 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "Cadvisor exporter",
+  "title": "Container Metrics Overview",
   "uid": "pMEd7m0Mz",
-  "version": 6,
+  "version": 3,
   "weekStart": ""
 }

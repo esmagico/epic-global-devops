@@ -23427,7 +23427,9 @@
   "refresh": "1m",
   "schemaVersion": 40,
   "tags": [
-    "linux"
+    "linux",
+    "VM",
+    "docker-host"
   ],
   "templating": {
     "list": [
@@ -23517,8 +23519,8 @@
   },
   "timepicker": {},
   "timezone": "browser",
-  "title": "Node Exporter Full",
+  "title": "VM Resource Dashboard",
   "uid": "rYdddlPWk",
-  "version": 5,
+  "version": 6,
   "weekStart": ""
 }
