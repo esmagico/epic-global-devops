@@ -5,6 +5,8 @@ services:
   minio:
     image: minio/minio
     restart: always
+    networks: 
+      - backend_network
     volumes:
       - minio:/data
     environment:
@@ -14,6 +16,8 @@ services:
 
   minio_helper:
     image: minio/mc
+    networks: 
+      - backend_network
     volumes:
       - './kickstart.sh:/etc/minio/kickstart.sh'
     entrypoint: /etc/minio/kickstart.sh

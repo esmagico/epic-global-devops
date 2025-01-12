@@ -2,6 +2,8 @@ services:
   redis:
     image: redis:latest
     restart: always
+    networks: 
+      - backend_network
     command: [ 'redis-server', '--appendonly', 'yes' ]
     volumes:
       - redis:/data

@@ -2,6 +2,8 @@ services:
   epic_global_ai:
       image: ghcr.io/${org}/epic-global-ai-services:${EPIC_GLOBAL_AI_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
+      networks:
+        - gateway_network
       environment:
         GOOGLE_AI_API_KEY: ${GOOGLE_AI_API_KEY:?GOOGLE_AI_API_KEY is not set}
         DATABASE_URI: ${DATABASE_URI:?DATABASE_URI is not set}
@@ -13,6 +15,8 @@ services:
   celery:
       image: ghcr.io/${org}/epic-global-ai-services:${EPIC_GLOBAL_AI_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
+      networks:
+        - ai_network
       command: celery -A app.utils.celery.celery worker --loglevel=info
       depends_on:
         - rabbitmq
@@ -28,10 +32,14 @@ services:
   redis-backend:
       image: redis:bookworm
       restart: always
+      networks:
+        - ai_network
 
   db-ai:
     image: postgres:14.15-alpine3.21
     restart: always
+    networks:
+      - ai_network
     volumes:
       - db-ai:/var/lib/postgresql/data
     healthcheck:
@@ -45,3 +53,7 @@ services:
 
 volumes:
   db-ai:
+
+networks:
+  ai_network:
+    driver: bridge

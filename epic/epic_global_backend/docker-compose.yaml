@@ -2,6 +2,9 @@ services:
   epic_global_backend:
       image: ghcr.io/${org}/epic-global-backend:${EPIC_GLOBAL_BACKEND_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
+      networks: 
+        - backend_network
+        - gateway_network
       environment:
         DB_HOST: ${DB_HOST:?DB_HOST is not set}
         DB_NAME: ${DB_NAME:?DB_NAME is not set}
@@ -21,3 +24,7 @@ services:
         AMAZON_REFRESH_TOKEN: ${AMAZON_REFRESH_TOKEN:?AMAZON_REFRESH_TOKEN is not set}
         PRODUCT_LISTING_BASE_URL: ${PRODUCT_LISTING_BASE_URL:?PRODUCT_LISTING_BASE_URL is not set}
         AI_SERVICE_BASE_URL: ${AI_SERVICE_BASE_URL:?AI_SERVICE_BASE_URL is not set}
+
+networks:
+  backend_network:
+    driver: bridge
