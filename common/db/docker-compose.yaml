@@ -2,6 +2,8 @@ services:
   db:
     image: postgres:17.2
     restart: always
+    networks:
+      - backend_network
     volumes:
       - db:/var/lib/postgresql/data
     healthcheck:

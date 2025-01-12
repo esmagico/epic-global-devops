@@ -2,6 +2,9 @@ services:
   kong:
     image: kong:3.6.1
     user: kong
+    networks:
+      - gateway_network
+      - kong_caddy_network
     environment:
       KONG_DATABASE: off
       KONG_ADMIN_ACCESS_LOG: /dev/stdout
@@ -24,3 +27,10 @@ services:
     restart: always
     volumes:
       - ./:/opt/kong
+
+
+networks:
+  gateway_network:
+    driver: bridge
+  kong_caddy_network:
+    driver: bridge

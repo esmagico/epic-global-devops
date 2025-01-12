@@ -6,6 +6,9 @@ services:
   caddy:
     image: caddy:2.8
     restart: always
+    networks:
+      - kong_caddy_network
+      - default
     cap_add:
       - NET_ADMIN
     ports:
