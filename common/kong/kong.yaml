@@ -23,4 +23,9 @@ services:
     routes:
     - name: backend_route
       expression: 'http.path ^= "/api" '
-  
+
+  - name: epic_global_contracts
+    url: http://epic_global_contracts:5000
+    routes:
+    - name: contracts_route
+      expression: 'http.path ^= "/contracts" '
