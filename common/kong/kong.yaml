@@ -41,14 +41,14 @@ services:
             second: 10 
             policy: local
 
-  # - name: epic_global_contracts
-  #   url: http://epic_global_contracts:5000
-  #   routes:
-  #   - name: contracts_route
-  #     expression: 'http.path ^= "/contracts" '
-  #     plugins:
-  #       - name: rate-limiting
-  #         config:
-  #           second: 10 
-  #           policy: local
+  - name: epic_global_contracts
+    url: http://epic_global_contracts:5000
+    routes:
+    - name: contracts_route
+      expression: 'http.path ^= "/contracts" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10 
+            policy: local
 
