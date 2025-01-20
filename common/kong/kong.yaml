@@ -11,21 +11,44 @@ plugins:
       bandwidth_metrics: true
       upstream_health_metrics: true
 
+  - name: rate-limiting
+    enabled: true
+    config:
+      minute: 100  # Allows 100 RPM
+      policy: local 
+
+
 services:
   - name: epic_global_ai
     url: http://epic_global_ai:5000
     routes:
     - name: ai_route
       expression: 'http.path ^= "/ai" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10 
+            policy: local
 
   - name: epic_global_backend
     url: http://epic_global_backend:3000
     routes:
     - name: backend_route
       expression: 'http.path ^= "/api" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10 
+            policy: local
 
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
     routes:
     - name: contracts_route
       expression: 'http.path ^= "/contracts" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10 
+            policy: local
+
