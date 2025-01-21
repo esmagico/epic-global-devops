@@ -30,6 +30,7 @@ services:
             second: 10 
             policy: local
 
+
   - name: epic_global_backend
     url: http://epic_global_backend:3000
     routes:
@@ -40,6 +41,14 @@ services:
           config:
             second: 10 
             policy: local
+    - name: product_registry_sku
+      expression: 'http.path ^= "/api/product-registry/sku" '
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 10
+            policy: local
+
 
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
