@@ -3,5 +3,5 @@
 }
 
 {$DOMAIN_SCHEME}://hasura-ai.{$DOMAIN_NAME} {
-    reverse_proxy hasura-ai:8080
+    reverse_proxy hasura_ai:8080
 }
