@@ -76,6 +76,14 @@ services:
           config:
             second: 30 
             policy: local
+    - name: upload_contact_route
+      paths:
+        - '/contracts/contact/upload/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
     - name: delete_contract_route
       paths:
         - '/contracts/contract/(?<brand_id>[^/]+)'
@@ -87,6 +95,14 @@ services:
     - name: contract_summary_route
       paths:
         - '/contracts/contract/(?<brand_id>[^/]+)/summary'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: contact_summary_route
+      paths:
+        - '/contracts/contact/(?<brand_id>[^/]+)/summary'
       plugins:
         - name: rate-limiting
           config:
