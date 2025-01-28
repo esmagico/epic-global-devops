@@ -58,6 +58,94 @@ services:
       plugins:
         - name: rate-limiting
           config:
-            second: 10 
+            second: 30 
+            policy: local
+    - name: create_brand_route
+      paths:
+        - '/contracts/contract/brand'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: upload_contract_route
+      paths:
+        - '/contracts/contract/upload/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: upload_contact_route
+      paths:
+        - '/contracts/contact/upload/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: delete_contract_route
+      paths:
+        - '/contracts/contract/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: contract_summary_route
+      paths:
+        - '/contracts/contract/(?<brand_id>[^/]+)/summary'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: contact_summary_route
+      paths:
+        - '/contracts/contact/(?<brand_id>[^/]+)/summary'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: parse_contract_route
+      paths:
+        - '/contracts/contract/parse/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: update_consent_route
+      paths:
+        - '/contracts/contract/(?<brand_id>[^/]+)/consent'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: upload_compliance_route
+      paths:
+        - '/contracts/compliance/upload'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: link_compliance_route
+      paths:
+        - '/contracts/compliance/(?<brand_id>[^/]+)/link'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
+            policy: local
+    - name: compliance_forms_route
+      paths:
+        - '/contracts/compliance/(?<brand_id>[^/]+)'
+      plugins:
+        - name: rate-limiting
+          config:
+            second: 30 
             policy: local
 
