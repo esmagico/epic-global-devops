@@ -1,4 +1,3 @@
-# a very minimal declarative config file
 _format_version: "3.0"
 
 plugins:
@@ -14,138 +13,108 @@ plugins:
   - name: rate-limiting
     enabled: true
     config:
-      minute: 100  # Allows 100 RPM
+      minute: 100
       policy: local 
-
 
 services:
   - name: epic_global_ai
     url: http://epic_global_ai:5000
     routes:
-    - name: ai_route
-      expression: 'http.path ^= "/ai" '
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 10 
-            policy: local
-
+      - name: ai_route
+        expression: 'http.path ^= "/ai"'
 
   - name: epic_global_backend
     url: http://epic_global_backend:3000
     routes:
-    - name: backend_route
-      expression: 'http.path ^= "/api" '
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 10 
-            policy: local
-    - name: product_registry_sku
-      expression: 'http.path ^= "/api/product-registry/sku" '
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 10
-            policy: local
-
+      - name: backend_route
+        expression: 'http.path ^= "/api"'
+      - name: product_registry_sku
+        expression: 'http.path ^= "/api/product-registry/sku"'
 
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
     routes:
-    - name: contracts_route
-      expression: 'http.path ^= "/contracts" '
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: create_brand_route
-      paths:
-        - '/contracts/contract/brand'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: upload_contract_route
-      paths:
-        - '/contracts/contract/upload/(?<brand_id>[^/]+)'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: upload_contact_route
-      paths:
-        - '/contracts/contact/upload/(?<brand_id>[^/]+)'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: delete_contract_route
-      paths:
-        - '/contracts/contract/(?<brand_id>[^/]+)'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: contract_summary_route
-      paths:
-        - '/contracts/contract/(?<brand_id>[^/]+)/summary'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: contact_summary_route
-      paths:
-        - '/contracts/contact/(?<brand_id>[^/]+)/summary'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: parse_contract_route
-      paths:
-        - '/contracts/contract/parse/(?<brand_id>[^/]+)'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: update_consent_route
-      paths:
-        - '/contracts/contract/(?<brand_id>[^/]+)/consent'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: upload_compliance_route
-      paths:
-        - '/contracts/compliance/upload'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: link_compliance_route
-      paths:
-        - '/contracts/compliance/(?<brand_id>[^/]+)/link'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-    - name: compliance_forms_route
-      paths:
-        - '/contracts/compliance/(?<brand_id>[^/]+)'
-      plugins:
-        - name: rate-limiting
-          config:
-            second: 30 
-            policy: local
-
+      - name: contracts_route
+        expression: 'http.path ^= "/contracts"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: create_brand_route
+        expression: 'http.path ^= "/contracts/contract/brand"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: upload_contract_route
+        expression: 'http.path ^= "/contracts/contract/upload/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: upload_contact_route
+        expression: 'http.path ^= "/contracts/contact/upload/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: delete_contract_route
+        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: contract_summary_route
+        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/summary"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: contact_summary_route
+        expression: 'http.path ^= "/contracts/contact/(?<brand_id>[^/]+)/summary"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: parse_contract_route
+        expression: 'http.path ^= "/contracts/contract/parse/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: update_consent_route
+        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/consent"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: upload_compliance_route
+        expression: 'http.path ^= "/contracts/compliance/upload"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: link_compliance_route
+        expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)/link"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+      - name: compliance_forms_route
+        expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
