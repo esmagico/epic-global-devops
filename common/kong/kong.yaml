@@ -118,3 +118,11 @@ services:
             config:
               second: 30 
               policy: local
+
+# Context Service Routes
+
+  - name: context_service
+    url: http://context_service:3000
+    routes:
+      - name: context_service_service
+        expression: 'http.path ^= "/context/context/validate"'
