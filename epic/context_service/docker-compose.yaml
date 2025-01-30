@@ -1,6 +1,6 @@
 services:
   context_service:
-      image: ghcr.io/${org}/context_service:${CONTEXT_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      image: ghcr.io/${org}/context-service:${CONTEXT_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
       environment:
         OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is not set}
