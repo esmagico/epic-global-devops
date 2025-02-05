@@ -14,7 +14,7 @@ plugins:
     enabled: true
     config:
       minute: 100
-      policy: local 
+      policy: local
 
 services:
   - name: epic_global_ai
@@ -28,9 +28,113 @@ services:
     routes:
       - name: backend_route
         expression: 'http.path ^= "/api"'
+      - name: product_registry_csv_parser
+        expression: 'http.path ^= "/api/product-registry/csv-parser"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
       - name: product_registry_sku
         expression: 'http.path ^= "/api/product-registry/sku"'
-
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_sku_file
+        expression: 'http.path ^= "/api/product-registry/sku/file"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_v2_sku_file
+        expression: 'http.path ^= "/api/product-registry/v2/sku/file"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_v2_sku
+        expression: 'http.path ^= "/api/product-registry/v2/sku"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_v2_sku_by_id
+        expression: 'http.path ^= "/api/product-registry/v2/sku/(?<sku_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_v3_sku
+        expression: 'http.path ^= "/api/product-registry/v3/sku/(?<sku_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_brand
+        expression: 'http.path ^= "/api/product-registry/brand/(?<brand_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_brand_onboarding
+        expression: 'http.path ^= "/product-registry/brand/(?P<brand_id>[^/]+)/onboarding/(?P<onboarding_step_name>[^/]+)$"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_brand_file
+        expression: 'http.path ^= "/api/product-registry/brand/(?<brand_id>[^/]+)/file"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_registry_brand_all
+        expression: 'http.path ^= "/api/product-registry/brand/all"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_listing_category
+        expression: 'http.path ^= "/api/product-listing/category"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_listing_by_id
+        expression: 'http.path ^= "/api/product-listing/(?<product_listing_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_listing_marketplace_status
+        expression: 'http.path ^= "/api/product-listing/marketplace-status/(?<product_listing_id>[^/]+)"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: product_listing_queue
+        expression: 'http.path ^= "/api/product-listing/queue"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: webhook_amazon
+        expression: 'http.path ^= "/api/webhook/amazon"'
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
     routes:
@@ -39,87 +143,87 @@ services:
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: create_brand_route
         expression: 'http.path ^= "/contracts/contract/brand"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: upload_contract_route
         expression: 'http.path ^= "/contracts/contract/upload/(?<brand_id>[^/]+)"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: upload_contact_route
         expression: 'http.path ^= "/contracts/contact/upload/(?<brand_id>[^/]+)"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: delete_contract_route
         expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: contract_summary_route
         expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/summary"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: contact_summary_route
         expression: 'http.path ^= "/contracts/contact/(?<brand_id>[^/]+)/summary"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: parse_contract_route
         expression: 'http.path ^= "/contracts/contract/parse/(?<brand_id>[^/]+)"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: update_consent_route
         expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/consent"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: upload_compliance_route
         expression: 'http.path ^= "/contracts/compliance/upload"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: link_compliance_route
         expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)/link"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
       - name: compliance_forms_route
         expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)"'
         plugins:
           - name: rate-limiting
             config:
-              second: 30 
+              second: 30
               policy: local
 
-# Context Service Routes
+  # Context Service Routes
 
   - name: context_service
     url: http://context_service:3000
