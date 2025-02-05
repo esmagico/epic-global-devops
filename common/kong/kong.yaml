@@ -17,12 +17,21 @@ plugins:
       policy: local
 
 services:
+  # Ai service routes
   - name: epic_global_ai
     url: http://epic_global_ai:5000
     routes:
       - name: ai_route
         expression: 'http.path ^= "/ai"'
+      - name: submit_task_route
+        expression: 'http.path ^= "/submit-task"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
 
+# Backend Routes
   - name: epic_global_backend
     url: http://epic_global_backend:3000
     routes:
