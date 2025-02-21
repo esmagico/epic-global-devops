@@ -1,8 +1,8 @@
 volumes:
-  environment:
+  vault:
 
 services:
-  environment:
+  vault:
     build:
       context: .
       dockerfile: Dockerfile
@@ -11,12 +11,12 @@ services:
       VAULT_USERNAME: ${ENVIRONMENT_USERNAME:?ENVIRONMENT_USERNAME is not set}
       VAULT_PASSWORD: ${ENVIRONMENT_PASSWORD:?ENVIRONMENT_PASSWORD is not set}
     volumes:
-      - environment:/vault/file
+      - vault:/vault/file
       - ./vault.json:/vault/config/vault.json
       - ./admin-policy.hcl:/vault/policies/admin-policy.hcl
       - ./vault-init.sh:/vault-init.sh
-      - ../../.env:/epic/.env
-      - ./:/epic/
+      - ../../.env:/epic/.env    #Change with the respective project name 
+      - ./:/epic/                #Change with the respective project name
     cap_add:
       - IPC_LOCK
     command: sh -c "bash vault-init.sh" 

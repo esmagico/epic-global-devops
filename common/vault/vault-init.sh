@@ -6,10 +6,12 @@ if [[ -z $VAULT_USERNAME && -z $VAULT_PASSWORD ]] ; then
     exit 1
 fi
 
+#Start Vault Server
 vault server -config=/vault/config/vault.json &
-
 sleep 2
 
+
+#Set Vault Address & Check Health
 export VAULT_ADDR="http://127.0.0.1:8200"
 VAULT_HEALTH_URL="$VAULT_ADDR/v1/sys/seal-status"
 while true; do
@@ -28,9 +30,12 @@ while true; do
     sleep 2
 done
 
+#initialize vault
 if [ "$initialized" = false ]; then 
 vault operator init > /vault/file/generated_keys.txt
 fi
+
+#Unseal Vault
 if [ "$sealed" = true  ]; then 
 # Parse unsealed keys
 while IFS= read -r line; do
@@ -42,7 +47,7 @@ done <  <(grep "Unseal Key " /vault/file/generated_keys.txt)
 fi
 
 
-# Get root token
+# Set Vault Token
 VAULT_TOKEN=$(grep "Initial Root Token: " < /vault/file/generated_keys.txt | cut -c21- )
 export VAULT_TOKEN
 
@@ -74,6 +79,6 @@ else
     echo "User $VAULT_USERNAME already exists."
 fi
 
-/bhasai/consul-init.sh &
+/epic/consul-init.sh &
 
 fg %1
