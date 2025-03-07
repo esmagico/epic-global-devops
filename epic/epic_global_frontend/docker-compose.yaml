@@ -1,7 +1,8 @@
 services:
   epic_global_frontend:
-      restart: always
-      image: ghcr.io/${org}/epic-global-frontend:${EPIC_GLOBAL_FRONTEND_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
-      environment:
+    restart: always
+    build:
+      context: https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/esmagico/epic-global-frontend.git#${EPIC_GLOBAL_FORNTEND_GITHUB_BRANCH:-${DEFAULT_GITHUB_BRANCH:?DEFAULT_GITHUB_BRANCH is not set}}
+      args:
         NEXT_PUBLIC_EPIC_BASE_URL: ${NEXT_PUBLIC_EPIC_BASE_URL:?NEXT_PUBLIC_EPIC_BASE_URL is not set}
         NEXT_PUBLIC_EPIC_CONTRACT_BASE_URL: ${NEXT_PUBLIC_EPIC_CONTRACT_BASE_URL:?NEXT_PUBLIC_EPIC_CONTRACT_BASE_URL is not set}
