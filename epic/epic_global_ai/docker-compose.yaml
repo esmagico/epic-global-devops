@@ -17,7 +17,7 @@ services:
   
   # ToDo: Figure out a way to dockerize celery in a proper way.
   celery:
-      image: ghcr.io/${org}/epic-global-ai-services:${EPIC_GLOBAL_AI_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
+      image: ghcr.io/${org}/epic-global-ai-services:dev
       restart: always
       command: celery -A app.utils.celery.celery worker --loglevel=info
       depends_on:
