@@ -1,0 +1,16 @@
+services:
+  cassandra:
+    image: cassandra:4.1
+    restart: always
+    volumes:
+      - cassandra:/var/lib/cassandra
+    environment:
+      - CASSANDRA_USER=${CASSANDRA_USER:?CASSANDRA_USER is not set}
+      - CASSANDRA_PASSWORD=${CASSANDRA_PASSWORD:?CASSANDRA_PASSWORD is not set}
+      - CASSANDRA_CLUSTER_NAME=${CASSANDRA_CLUSTER_NAME:?CASSANDRA_CLUSTER_NAME is not set}
+      - CASSANDRA_DC=${CASSANDRA_DC:?CASSANDRA_DC is not set}
+      - CASSANDRA_AUTHENTICATOR=${CASSANDRA_AUTHENTICATOR:?CASSANDRA_AUTHENTICATOR is not set}
+      - CASSANDRA_AUTHORIZER=${CASSANDRA_AUTHORIZER:?CASSANDRA_AUTHORIZER is not set}
+
+volumes:
+  cassandra:
