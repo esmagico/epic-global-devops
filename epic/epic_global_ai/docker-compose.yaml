@@ -19,7 +19,7 @@ services:
   celery:
       image: ghcr.io/${org}/epic-global-ai-services:${EPIC_GLOBAL_AI_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
-      command: celery -A app.utils.celery.celery worker --loglevel=info
+      command: celery -A app.celery_app.app worker --loglevel=info
       depends_on:
         - rabbitmq
         - redis
