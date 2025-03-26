@@ -14,6 +14,8 @@ services:
         CONTEXT_MAX_RETRIES: ${CONTEXT_MAX_RETRIES:?CONTEXT_MAX_RETRIES is not set}
         AI_SERVICE_SWAGGER_USER: ${AI_SERVICE_SWAGGER_USER:?AI_SERVICE_SWAGGER_USER is not set}
         AI_SERVICE_SWAGGER_PASSWORD: ${AI_SERVICE_SWAGGER_PASSWORD:?AI_SERVICE_SWAGGER_PASSWORD is not set}
+        AI_SERIVCE_AUTH_EMAIL: ${AI_SERIVCE_AUTH_EMAIL:?AI_SERIVCE_AUTH_EMAIL is not set}
+        AI_SERIVCE_AUTH_PASSWORD: ${AI_SERIVCE_AUTH_PASSWORD:?AI_SERIVCE_AUTH_PASSWORD is not set}
   
   # ToDo: Figure out a way to dockerize celery in a proper way.
   celery:
@@ -33,6 +35,8 @@ services:
         SCRAPER_AUTH: ${SCRAPER_AUTH:?SCRAPER_AUTH is not set}
         CONTEXT_SERVICE_BASE_URL: ${CONTEXT_SERVICE_BASE_URL:?CONTEXT_SERVICE_BASE_URL is not set}
         CONTEXT_MAX_RETRIES: ${CONTEXT_MAX_RETRIES:?CONTEXT_MAX_RETRIES is not set}
+        AI_SERIVCE_AUTH_EMAIL: ${AI_SERIVCE_AUTH_EMAIL:?AI_SERIVCE_AUTH_EMAIL is not set}
+        AI_SERIVCE_AUTH_PASSWORD: ${AI_SERIVCE_AUTH_PASSWORD:?AI_SERIVCE_AUTH_PASSWORD is not set}
 
   # ToDo: The redis and db instances should be shared across instances. To be discussed
   redis-backend:
