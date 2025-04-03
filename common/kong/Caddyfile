@@ -1,3 +1,9 @@
 {$DOMAIN_SCHEME}://kong.{$DOMAIN_NAME} {
     reverse_proxy kong:8000
 }
+
+# Not to be exposed for security purposes
+
+# {$DOMAIN_SCHEME}://kong-admin.{$DOMAIN_NAME} {
+#     reverse_proxy kong:8001
+# }
