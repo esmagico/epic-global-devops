@@ -3,5 +3,5 @@ services:
       image: ghcr.io/${org}/context-service:${CONTEXT_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
       environment:
-        OPENAI_API_KEY: ${OPENAI_API_KEY:?OPENAI_API_KEY is not set}
-        GOOGLE_API_KEY: ${GOOGLE_API_KEY:?GOOGLE_API_KEY is not set}
+       CONTEXT_SERVICE_OPENAI_API_KEY: ${CONTEXT_SERVICE_OPENAI_API_KEY:?CONTEXT_SERVICE_OPENAI_API_KEY is not set}
+       CONTEXT_SERVICE_GOOGLE_API_KEY: ${CONTEXT_SERVICE_GOOGLE_API_KEY:?CONTEXT_SERVICE_GOOGLE_API_KEY is not set}
