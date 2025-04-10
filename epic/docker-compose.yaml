@@ -4,4 +4,4 @@ include:
   - ./epic_global_frontend/docker-compose.yaml
   - ./epic_global_contracts/docker-compose.yaml
   - ./context_service/docker-compose.yaml
-  - ./telemetry/docker-compose.yaml
+  # - ./telemetry/docker-compose.yaml
