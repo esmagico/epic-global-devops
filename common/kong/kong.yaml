@@ -37,12 +37,11 @@ services:
     routes:
       - name: backend_route
         expression: 'http.path ^= "/api"'
-
-      plugins:
-        - name: request-size-limiting
-          config:
-            allowed_payload_size: 50
-            require_content_length: false
+        plugins:
+          - name: request-size-limiting
+            config:
+              allowed_payload_size: 50
+              require_content_length: false
 
       # - name: product_registry_csv_parser
       #   expression: 'http.path ^= "/api/product-registry/csv-parser"'

@@ -1,20 +1,18 @@
 services:
-  cassandra:
-    image: cassandra:4.1
+  telemetry-db:
+    image: postgres:17.2
     restart: always
     volumes:
-      - cassandra:/var/lib/cassandra
+      - telemetry-db:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     environment:
-      - CASSANDRA_USER=${CASSANDRA_USER:?CASSANDRA_USER is not set}
-      - CASSANDRA_PASSWORD=${CASSANDRA_PASSWORD:?CASSANDRA_PASSWORD is not set}
-      - CASSANDRA_CLUSTER_NAME=${CASSANDRA_CLUSTER_NAME:?CASSANDRA_CLUSTER_NAME is not set}
-      - CASSANDRA_DC=${CASSANDRA_DC:?CASSANDRA_DC is not set}
-      - CASSANDRA_AUTHENTICATOR=${CASSANDRA_AUTHENTICATOR:?CASSANDRA_AUTHENTICATOR is not set}
-      - CASSANDRA_AUTHORIZER=${CASSANDRA_AUTHORIZER:?CASSANDRA_AUTHORIZER is not set}
-      - MAX_HEAP_SIZE=1G
-      - HEAP_NEWSIZE=256M
-      - CASSANDRA_KEY_CACHE_SIZE=64M
-      - CASSANDRA_ROW_CACHE_SIZE=64M
+      POSTGRES_USER: ${TELEMETRY_DB_USER:?TELEMETRY_DB_USER is not set}
+      POSTGRES_PASSWORD: ${TELEMETRY_DB_PASSWORD:?TELEMETRY_DB_PASSWORD is not set}
+      POSTGRES_DB: ${TELEMETRY_DB:?TELEMETRY_DB is not set}
 
 volumes:
-  cassandra:
+  telemetry-db:
