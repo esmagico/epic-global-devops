@@ -53,28 +53,6 @@ services:
         AI_SERVICE_SWAGGER_USER: ${AI_SERVICE_SWAGGER_USER:?AI_SERVICE_SWAGGER_USER is not set}
         AI_SERVICE_TELEMETRY_URI: ${AI_SERVICE_TELEMETRY_URI:?AI_SERVICE_TELEMETRY_URI is not set}
         AI_SERVICE_CONTEXT_API_KEY: ${AI_SERVICE_CONTEXT_API_KEY:?AI_SERVICE_CONTEXT_API_KEY is not set}
-
-  # ToDo: The redis and db instances should be shared across instances. To be discussed
-  redis-backend:
-      image: redis:bookworm
-      restart: always
-
-  db-ai:
-    image: postgres:14.15-alpine3.21
-    restart: always
-    ports:
-      - "5432:5432" 
-    volumes:
-      - db-ai:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:?POSTGRES_USER is not set}", "-d", "${POSTGRES_DB_AI:?POSTGRES_DB is not set}"]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
-      POSTGRES_DB: ${POSTGRES_DB_AI:?POSTGRES_DB_AI is not set}
-
+        
 volumes:
   db-ai:

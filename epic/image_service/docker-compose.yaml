@@ -1,7 +1,8 @@
 services:
   image_service:
-      image: ghcr.io/${org}/image-service:${IMAGE_SERVICE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
+      build:
+        context: https://${GIT_USERNAME}:${GIT_PASSWORD}@github.com/esmagico/image-service.git#${IMAGE_SERVICE_GITHUB_BRANCH:-${DEFAULT_GITHUB_BRANCH:?DEFAULT_GITHUB_BRANCH is not set}}
       environment:
         IMAGE_SERVICE_WEAVIATE_HTTP_HOST: ${IMAGE_SERVICE_WEAVIATE_HTTP_HOST:?IMAGE_SERVICE_WEAVIATE_HTTP_HOST is not set}
         IMAGE_SERVICE_WEAVIATE_HTTP_PORT: ${IMAGE_SERVICE_WEAVIATE_HTTP_PORT:?IMAGE_SERVICE_WEAVIATE_HTTP_PORT is not set}

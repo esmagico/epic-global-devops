@@ -7,6 +7,11 @@ services:
       - redis:/data
       - redis_conf:/usr/local/etc/redis/redis.conf
 
+  # ToDo: The redis and db instances should be shared across instances. To be discussed
+  redis-backend:
+      image: redis:bookworm
+      restart: always
+
 volumes:
   redis:
   redis_conf:
