@@ -43,113 +43,140 @@ services:
               allowed_payload_size: 50
               require_content_length: false
 
-      # - name: product_registry_csv_parser
-      #   expression: 'http.path ^= "/api/product-registry/csv-parser"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_sku
-      #   expression: 'http.path ^= "/api/product-registry/sku"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_sku_file
-      #   expression: 'http.path ^= "/api/product-registry/sku/file"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_v2_sku_file
-      #   expression: 'http.path ^= "/api/product-registry/v2/sku/file"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_v2_sku
-      #   expression: 'http.path ^= "/api/product-registry/v2/sku"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_v2_sku_by_id
-      #   expression: 'http.path ^= "/api/product-registry/v2/sku/(?<sku_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_v3_sku
-      #   expression: 'http.path ^= "/api/product-registry/v3/sku/(?<sku_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_brand
-      #   expression: 'http.path ^= "/api/product-registry/brand/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_brand_onboarding
-      #   expression: 'http.path ^= "/product-registry/brand/(?P<brand_id>[^/]+)/onboarding/(?P<onboarding_step_name>[^/]+)$"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_brand_file
-      #   expression: 'http.path ^= "/api/product-registry/brand/(?<brand_id>[^/]+)/file"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_registry_brand_all
-      #   expression: 'http.path ^= "/api/product-registry/brand/all"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_listing_category
-      #   expression: 'http.path ^= "/api/product-listing/category"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_listing_by_id
-      #   expression: 'http.path ^= "/api/product-listing/(?<product_listing_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_listing_marketplace_status
-      #   expression: 'http.path ^= "/api/product-listing/marketplace-status/(?<product_listing_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: product_listing_queue
-      #   expression: 'http.path ^= "/api/product-listing/queue"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: webhook_amazon
-      #   expression: 'http.path ^= "/api/webhook/amazon"'
+      - name: sku_listing_category
+        expression: 'http.path == "/sku-listing/category"'
+        # plugins:
+        #   - name: rate-limiting
+        #     config:
+        #       second: 30
+        #       policy: local
+
+      - name: sku_listing_mfn_sku
+        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)"'
+
+      - name: sku_listing_bulk_listing_manager
+        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/bulk-listing-manager"'
+
+      - name: sku_listing_update_listing_category
+        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/update-listing-category"'
+
+      - name: sku_listing_v2
+        expression: 'http.path ^= "/sku-listing/v2/(?<sku_listing_id>[^/]+)"'
+
+      - name: sku_listing_bulk_update
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/bulk-update"'
+
+      - name: sku_listing_queue
+        expression: 'http.path == "/sku-listing/queue"'
+
+      - name: sku_listing_content_all
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/all"'
+
+      - name: sku_listing_content_by_id
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)"'
+
+      - name: sku_listing_validate_upload_file
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-upload-validation-file"'
+
+      - name: sku_listing_regenerate_content
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)/regenerate"'
+
+      - name: sku_listing_update_active_content
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/update-active-content"'
+
+      - name: sku_listing_validate_file
+        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-listing-validation-file/(?<listing_validation_file_id>[^/]+)"'
+
+      - name: sku_listing_marketplace_op
+        expression: 'http.path == "/sku-listing/marketplace-specific-operation"'
+
+      - name: sku_listing_marketplace_profile_credentials
+        expression: 'http.path == "/sku-listing/marketplace-profile/credentials"'
+
+      - name: a_plus_content_all
+        expression: 'http.path == "/sku-listing/a-plus-content"'
+
+      - name: a_plus_content_by_id
+        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/get-sku-listing"'
+
+      - name: a_plus_content_brand_all
+        expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+
+      - name: a_plus_content_create
+        expression: 'http.path == "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+
+      - name: a_plus_content_by_id_and_brand
+        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)"'
+
+      - name: a_plus_content_upload_media
+        expression: 'http.path == "/sku-listing/a-plus-content/upload-media"'
+
+      - name: a_plus_content_update
+        expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)/(?<a_plus_content_id>[^/]+)"'
+
+      - name: a_plus_content_assign_listing
+        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)/assign-listing"'
+
+      - name: webhook_amazon
+        expression: 'http.path == "/webhook/amazon"'
+
+      - name: auth_login
+        expression: 'http.path == "/auth/login"'
+
+      - name: auth_refresh
+        expression: 'http.path == "/auth/refresh-token"'
+
+      - name: auth_user
+        expression: 'http.path == "/auth/user"'
+
+      - name: brand_upsert
+        expression: 'http.path == "/brand-management/upsert-brand"'
+
+      - name: brand_members
+        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/members"'
+
+      - name: brand_add_member
+        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member$"'
+
+      - name: brand_update_member
+        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+
+      - name: brand_delete_member
+        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+
+      - name: sku_registry_csv_parser
+        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku/csv-parser"'
+
+      - name: sku_registry_save
+        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+
+      - name: sku_registry_update
+        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+
+      - name: sku_registry_all
+        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/sku"'
+
+      - name: sku_registry_upload_file
+        expression: 'http.path == "/sku-registry/v2/sku/file"'
+
+      - name: sku_registry_get_mfn_sku
+        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku/(?<mfn_sku_id>[^/]+)"'
+
+      - name: sku_registry_all_mfn_sku
+        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku"'
+
+      - name: sku_registry_brand_all
+        expression: 'http.path == "/sku-registry/brand/all"'
+
+      - name: sku_registry_brand
+        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)"'
+
+      - name: sku_registry_brand_onboarding
+        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/onboarding/(?<onboarding_step_name>[^/]+)"'
+
+      - name: sku_registry_brand_file
+        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/file"'
+
   
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
