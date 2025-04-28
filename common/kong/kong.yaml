@@ -192,147 +192,149 @@ services:
         expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/file"'
 
   
+  # Contracts Service Routes
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000
     routes:
-      - name: contracts_route
+      - name: contracts_superroute
         expression: 'http.path ^= "/contracts"'
         plugins:
           - name: rate-limiting
             config:
               second: 30
               policy: local
-      - name: create_brand_route
-        expression: 'http.path ^= "/contracts/contract/brand"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: upload_contract_route
-        expression: 'http.path ^= "/contracts/contract/upload/(?<brand_id>[^/]+)"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: upload_contact_route
-        expression: 'http.path ^= "/contracts/contact/upload/(?<brand_id>[^/]+)"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: delete_contract_route
-        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: contract_summary_route
-        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/summary"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: contact_summary_route
-        expression: 'http.path ^= "/contracts/contact/(?<brand_id>[^/]+)/summary"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: parse_contract_route
-        expression: 'http.path ^= "/contracts/contract/parse/(?<brand_id>[^/]+)"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: update_consent_route
-        expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/consent"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: upload_compliance_route
-        expression: 'http.path ^= "/contracts/compliance/upload"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: link_compliance_route
-        expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)/link"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: compliance_forms_route
-        expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
+      # - name: create_brand_route
+      #   expression: 'http.path ^= "/contracts/contract/brand"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: upload_contract_route
+      #   expression: 'http.path ^= "/contracts/contract/upload/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: upload_contact_route
+      #   expression: 'http.path ^= "/contracts/contact/upload/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: delete_contract_route
+      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: contract_summary_route
+      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/summary"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: contact_summary_route
+      #   expression: 'http.path ^= "/contracts/contact/(?<brand_id>[^/]+)/summary"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: parse_contract_route_backend
+      #   expression: 'http.path ^= "/contracts/contract/parse/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: update_consent_route
+      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/consent"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: upload_compliance_route
+      #   expression: 'http.path ^= "/contracts/compliance/upload"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: link_compliance_route
+      #   expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)/link"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
+      # - name: compliance_forms_route
+      #   expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
 
-      - name: get_brand_route
-        expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
-        methods: ["GET"]
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30 
-              policy: local
+      # - name: get_brand_route
+      #   expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30 
+      #         policy: local
 
-      - name: update_brand_route
-        expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
-        methods: ["PATCH"]
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30 
-              policy: local
+      # - name: update_brand_route
+      #   expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30 
+      #         policy: local
 
-      - name: save_parsed_contract_data_route
-        expression: 'http.path ^= "/contracts/save-parsed-contract-data"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
+      # - name: save_parsed_contract_data_route
+      #   expression: 'http.path ^= "/contracts/save-parsed-contract-data"'
+      #   plugins:
+      #     - name: rate-limiting
+      #       config:
+      #         second: 30
+      #         policy: local
 
   # Context Service Routes
-
   - name: context_service
     url: http://context_service:3000
     routes:
-      - name: context_service_service
-        expression: 'http.path ^= "/context/context/validate"'
-      - name: context_service_root
-        expression: 'http.method == "GET" && http.path == "/"'
-      - name: context_service_submit_test
-        expression: 'http.method == "POST" && http.path == "/api/submitTest"'
-      - name: context_service_status
-        expression: 'http.method == "GET" && http.path ~ "^/api/status/[^/]+$"'
-      - name: context_service_validate
-        expression: 'http.method == "POST" && http.path == "/context/validate"'
+      - name: context_superroute
+        expression: 'http.path ^= "/context"'
+        strip_path: true
+      # - name: context_service_submit_test
+      #   expression: 'http.method == "POST" && http.path == "/context/api/submitTest"'
+      #   strip_path: true
+      # - name: context_service_status
+      #   expression: 'http.method == "GET" && http.path ~ "^/context/api/status/[^/]+$"'
+      #   strip_path: true
+      # - name: context_service_validate
+      #   expression: 'http.method == "POST" && http.path == "/context/context/validate"'
+      #   strip_path: true
 
 # Image Service Routes
   - name: image_service
     url: http://image_service:5000
     routes:
-      - name: image_service_root
-        expression: 'http.method == "GET" && http.path == "/"'
-      - name: image_service_check_compliance
-        expression: 'http.method == "POST" && http.path == "/images/check-compliance"'
-      - name: image_service_delete_guidelines
-        expression: 'http.method == "DELETE" && http.path == "/images/delete-guidelines"'
-      - name: image_service_ingest
-        expression: 'http.method == "POST" && http.path == "/images/ingest"'
-      - name: image_service_retrieve_guidelines
-        expression: 'http.method == "GET" && http.path == "/images/retrieve-guidelines"'
+      - name: image_superroute
+        expression: 'http.path ^= "/images"'
+      # - name: image_service_root
+      #   expression: 'http.method == "GET" && http.path == "/"'
+      # - name: image_service_check_compliance
+      #   expression: 'http.method == "POST" && http.path == "/images/check-compliance"'
+      # - name: image_service_delete_guidelines
+      #   expression: 'http.method == "DELETE" && http.path == "/images/delete-guidelines"'
+      # - name: image_service_ingest
+      #   expression: 'http.method == "POST" && http.path == "/images/ingest"'
+      # - name: image_service_retrieve_guidelines
+      #   expression: 'http.method == "GET" && http.path == "/images/retrieve-guidelines"'
