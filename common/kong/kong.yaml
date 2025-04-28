@@ -30,7 +30,21 @@ services:
             config:
               second: 30
               policy: local
-
+      - name: parse_contract_route
+        expression: 'http.path ^= "/parse-contract"'
+      - name: parse_contact_route
+        expression: 'http.path ^= "/parse-contact"'
+      - name: generate_content_route
+        expression: 'http.path ^= "/generate-content"'
+      - name: execute_route
+        expression: 'http.path ^= "/execute"'
+      - name: get_prompts_route
+        expression: 'http.path ^= "/prompts"'
+      - name: get_similarity_score_route
+        expression: 'http.path ^= "/get-similarity-score"'
+      - name: home_route
+        expression: 'http.path == "/"'
+        
 # Backend Routes
   - name: epic_global_backend
     url: http://epic_global_backend:3000
@@ -239,6 +253,32 @@ services:
               second: 30
               policy: local
 
+      - name: get_brand_route
+        expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
+        methods: ["GET"]
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+
+      - name: update_brand_route
+        expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
+        methods: ["PATCH"]
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30 
+              policy: local
+
+      - name: save_parsed_contract_data_route
+        expression: 'http.path ^= "/contracts/save-parsed-contract-data"'
+        plugins:
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+
   # Context Service Routes
 
   - name: context_service
@@ -246,3 +286,26 @@ services:
     routes:
       - name: context_service_service
         expression: 'http.path ^= "/context/context/validate"'
+      - name: context_service_root
+        expression: 'http.method == "GET" && http.path == "/"'
+      - name: context_service_submit_test
+        expression: 'http.method == "POST" && http.path == "/api/submitTest"'
+      - name: context_service_status
+        expression: 'http.method == "GET" && http.path ~ "^/api/status/[^/]+$"'
+      - name: context_service_validate
+        expression: 'http.method == "POST" && http.path == "/context/validate"'
+
+# Image Service Routes
+  - name: image_service
+    url: http://image_service:5000
+    routes:
+      - name: image_service_root
+        expression: 'http.method == "GET" && http.path == "/"'
+      - name: image_service_check_compliance
+        expression: 'http.method == "POST" && http.path == "/images/check-compliance"'
+      - name: image_service_delete_guidelines
+        expression: 'http.method == "DELETE" && http.path == "/images/delete-guidelines"'
+      - name: image_service_ingest
+        expression: 'http.method == "POST" && http.path == "/images/ingest"'
+      - name: image_service_retrieve_guidelines
+        expression: 'http.method == "GET" && http.path == "/images/retrieve-guidelines"'
