@@ -5,3 +5,15 @@ scripts/webhook/hooks.json
 # Ignore SSL certs and keys
 postgres_conf/ssl/server.crt
 postgres_conf/ssl/server.key
+
+# Ignore Redis TLS/SSL certificates and keys
+**/redis*.crt
+**/redis*.key
+**/redis*.pem
+**/tls/redis*
+**/certs/redis*
+
+# Generic cert/key ignores (if not already in your .gitignore)
+**/*.crt
+**/*.key
+**/*.pem
