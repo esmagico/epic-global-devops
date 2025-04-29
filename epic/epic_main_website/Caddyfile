@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://web.uat.epicglobalinc.com{
-    reverse_proxy epic_main_website:4173
-}
