@@ -2,11 +2,16 @@ services:
   redis:
     image: redis:latest
     restart: always
-    command: [ 'redis-server', '--appendonly', 'yes' ]
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     volumes:
       - redis:/data
-      - redis_conf:/usr/local/etc/redis/redis.conf
+      - ./redis.conf:/usr/local/etc/redis/redis.conf:ro
+      - ./certs:/usr/local/etc/redis/certs:ro
+      - ./certs/redis.crt:/usr/local/etc/redis/certs/redis.crt:ro  # Redis server certificate
+      - ./certs/redis.key:/usr/local/etc/redis/certs/redis.key  # Redis private key
+      - ./certs/ca.crt:/usr/local/etc/redis/certs/ca.crt:ro        # CA public certificate
+    ports:
+      - "6379:6379" 
 
 volumes:
   redis:
-  redis_conf:

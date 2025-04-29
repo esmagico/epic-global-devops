@@ -1,6 +1,5 @@
 include:
- - ./common/vault/docker-compose.yaml
- - ./common/db/docker-compose.yaml
+ - ./common/redis/docker-compose.yaml
 services:
   caddy:
     extends:
