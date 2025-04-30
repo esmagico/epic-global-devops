@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://api.{$DOMAIN_NAME} {
-    reverse_proxy epic_global_backend:3000
-}
