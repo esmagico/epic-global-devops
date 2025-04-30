@@ -7,8 +7,8 @@ services:
     extends:
       file: common/caddy/docker-compose.yaml
       service: caddy
-    volumes:
-     - ./epic:/etc/caddy/epic
+    # volumes:
+    #  - ./epic:/etc/caddy/epic
 
 volumes:
   caddy_data:
