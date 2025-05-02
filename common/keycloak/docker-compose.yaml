@@ -4,7 +4,7 @@ services:
     restart: always
     environment:
       KC_DB: postgres
-      KC_DB_URL: jdbc:postgresql://db_ai:5432/keycloak
+      KC_DB_URL: jdbc:postgresql://db_keycloak:5432/keycloak
       KC_DB_USERNAME: ${POSTGRES_USER:?POSTGRES_USER is not set}
       KC_DB_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
 
