@@ -1,10 +1,10 @@
 include:
- - ./common/vault/docker-compose.yaml
+  # - ./common/vault/docker-compose.yaml
  - ./common/db/docker-compose.yaml
- - ./common/rabbitmq/docker-compose.yaml
+   # - ./common/rabbitmq/docker-compose.yaml
  - ./common/keycloak/docker-compose.yaml
  - ./common/kong/docker-compose.yaml
- - ./epic/docker-compose.yaml
+   #- ./epic/docker-compose.yaml
 
 services:
   caddy:
