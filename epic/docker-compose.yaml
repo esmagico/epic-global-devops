@@ -1,2 +1,2 @@
 include:
-  - ./epic_global_frontend/docker-compose.yaml
+  - ./epic_main_website/docker-compose.yaml
