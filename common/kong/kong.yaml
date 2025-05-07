@@ -197,7 +197,7 @@ services:
     url: http://epic_global_contracts:5000
     routes:
       - name: contracts_superroute
-        expression: 'http.path ^= "/contracts"'
+        expression: 'http.path ^= "/brands"'
         plugins:
           - name: rate-limiting
             config:
