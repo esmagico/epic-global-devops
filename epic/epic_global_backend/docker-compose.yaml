@@ -2,7 +2,7 @@ services:
   epic_global_backend:
       image: ghcr.io/${org}/epic-global-backend:${EPIC_GLOBAL_BACKEND_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
-      environment:   
+      environment:
         BACKEND_SERVICE_DATABASE_URL: ${BACKEND_SERVICE_DATABASE_URL:?BACKEND_SERVICE_DATABASE_URL is not set}
         BACKEND_SERVICE_CACHE_HOST: ${BACKEND_SERVICE_CACHE_HOST:?BACKEND_SERVICE_CACHE_HOST is not set}
         BACKEND_SERVICE_CACHE_PORT: ${BACKEND_SERVICE_CACHE_PORT:?BACKEND_SERVICE_CACHE_PORT is not set}

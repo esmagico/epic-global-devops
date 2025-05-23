@@ -10,11 +10,11 @@ plugins:
       bandwidth_metrics: true
       upstream_health_metrics: true
 
-  - name: rate-limiting
-    enabled: true
-    config:
-      minute: 100
-      policy: local
+  # - name: rate-limiting
+  #   enabled: true
+  #   config:
+  #     minute: 100
+  #     policy: local
 
 services:
   # Ai service routes
@@ -22,6 +22,7 @@ services:
     url: http://epic_global_ai:5000
     routes:
       - name: submit_task_route
+<<<<<<< Updated upstream
         expression: 'http.path ^= "/ai/submit-task"'
         strip_path: false
         plugins:
@@ -36,6 +37,14 @@ services:
               policy: local
       - name: ai_route
         expression: 'http.path ^= "/ai"' # Place super route at bottom to lower its priority
+=======
+        expression: 'http.path ^= "/submit-task"'
+        # plugins:
+        #   - name: rate-limiting
+        #     config:
+        #       second: 30
+        #       policy: local
+>>>>>>> Stashed changes
       - name: parse_contract_route
         expression: 'http.path ^= "/parse-contract"'
       - name: parse_contact_route
@@ -219,6 +228,7 @@ services:
     url: http://epic_global_contracts:5000/
     routes:
       - name: contracts_superroute
+<<<<<<< Updated upstream
         expression: 'http.path ^= "/brands"'
         plugins:
           - name: rate-limiting
@@ -233,6 +243,14 @@ services:
             config:
               replace:
                 uri: "/compliance/upload"
+=======
+        expression: 'http.path ^= "/contracts"'
+        # plugins:
+        #   - name: rate-limiting
+        #     config:
+        #       second: 30
+        #       policy: local
+>>>>>>> Stashed changes
       # - name: create_brand_route
       #   expression: 'http.path ^= "/contracts/contract/brand"'
       #   plugins:
