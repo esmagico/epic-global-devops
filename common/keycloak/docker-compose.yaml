@@ -15,7 +15,7 @@ services:
       KC_HTTP_ENABLED: true # Needed for reverse proxy  https://www.keycloak.org/server/reverseproxy
       KC_HEALTH_ENABLED: true
       KC_METRICS_ENABLED: true
-
+      
       KEYCLOAK_ADMIN: ${KC_BOOTSTRAP_ADMIN_USERNAME:?KC_BOOTSTRAP_ADMIN_USERNAME is not set}
       KEYCLOAK_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD:?KC_BOOTSTRAP_ADMIN_PASSWORD is not set}
     command: start
