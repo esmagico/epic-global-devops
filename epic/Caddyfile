@@ -2,9 +2,6 @@ import ./epic_global_backend/Caddyfile
 import ./epic_global_ai/Caddyfile
 import ./epic_global_frontend/Caddyfile
 import ./epic_global_contracts/Caddyfile
-<<<<<<< HEAD
 import ./epic_main_website/Caddyfile
-=======
 import ./context_service/Caddyfile
 import ./image_service/Caddyfile
->>>>>>> main
