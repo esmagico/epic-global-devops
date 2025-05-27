@@ -368,7 +368,7 @@ services:
               uri: "/auth/roles/$(uri_captures.role_name)"
 
       - name: auth_update_role_by_name
-        expression: 'http.method=="PATCH" && http.path ~ "^/api/auth/roles/(?<role_name>[^/]+)$"' # UNCHANGED (requires capture)
+        expression: 'http.method == "PATCH" && http.path ~ "^/api/auth/roles/(?<role_name>[^/]+)$"' # UNCHANGED (requires capture)
         strip_path: false
         plugins:
         - name: request-transformer
