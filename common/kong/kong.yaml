@@ -677,7 +677,7 @@ services:
               replace:
                 uri: "/contract/brand"
       - name: upload_contract_route
-        expression: 'http.path == "/contracts/contract/upload/(?<brand_id>[^/]+)"'
+        expression: 'http.path ~ "^/contracts/contract/upload/(?<brand_id>[^/]+)$"''
         strip_path: false
         plugins:
           - name: request-transformer
@@ -685,7 +685,7 @@ services:
               replace:
                 uri: "/contract/upload/$(uri_captures.brand_id)"
       - name: upload_contact_route
-        expression: 'http.path == "/contracts/contact/upload/(?<brand_id>[^/]+)"'
+        expression: 'http.path ~ "^/contracts/contact/upload/(?<brand_id>[^/]+)$"''
         strip_path: false
         plugins:
           - name: request-transformer
