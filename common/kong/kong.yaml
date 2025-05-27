@@ -79,141 +79,546 @@ services:
         #       allowed_payload_size: 50
         #       require_content_length: false
 
-      # - name: sku_listing_category
-      #   expression: 'http.path == "/sku-listing/category"'
-        # plugins:
-        #   - name: rate-limiting
-        #     config:
-        #       second: 30
-        #       policy: local
+      - name: sku_listing_go_live 
+        expression: 'http.path == "/api/sku-listing/go-live-listing"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/go-live-listing"
 
-      # - name: sku_listing_mfn_sku
-      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)"'
+      - name: sku_listing_go_live_by_brand_sku  
+        expression: 'http.path ~ "^/api/sku-listing/go-live-listing/brand/(?<brand_id>[^/]+)/(?<sku_listing_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/go-live-listing/brand/$(uri_captures.brand_id)/$(uri_captures.sku_listing_id)"
 
-      # - name: sku_listing_bulk_listing_manager
-      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/bulk-listing-manager"'
+      - name: sku_listing_category
+        expression: 'http.path == "/api/sku-listing/category"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/category"  
 
-      # - name: sku_listing_update_listing_category
-      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/update-listing-category"'
+      - name: sku_listing_mfn_sku
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/mfn-sku/(?<mfn_sku_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/mfn-sku/$(uri_captures.mfn_sku_id)"
 
-      # - name: sku_listing_v2
-      #   expression: 'http.path ^= "/sku-listing/v2/(?<sku_listing_id>[^/]+)"'
+      - name: sku_listing_bulk_listing_manager
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/mfn-sku/(?<mfn_sku_id>[^/]+)/bulk-listing-manager$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/mfn-sku/$(uri_captures.mfn_sku_id)/bulk-listing-manager"
 
-      # - name: sku_listing_bulk_update
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/bulk-update"'
+      - name: sku_listing_update_listing_category
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/mfn-sku/(?<mfn_sku_id>[^/]+)/update-listing-category$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/mfn-sku/$(uri_captures.mfn_sku_id)/update-listing-category"
 
-      # - name: sku_listing_queue
-      #   expression: 'http.path == "/sku-listing/queue"'
+      - name: sku_listing_v2
+        expression: 'http.path ~ "^/api/sku-listing/v2/(?<sku_listing_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/v2/$(uri_captures.sku_listing_id)"
 
-      # - name: sku_listing_content_all
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/all"'
+      - name: sku_listing_bulk_update
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/bulk-update$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/bulk-update"
 
-      # - name: sku_listing_content_by_id
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)"'
+      - name: sku_listing_queue
+        expression: 'http.path == "/api/sku-listing/queue"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/queue"
 
-      # - name: sku_listing_validate_upload_file
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-upload-validation-file"'
+      - name: sku_listing_content_all
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/content/all$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/content/all"
 
-      # - name: sku_listing_regenerate_content
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)/regenerate"'
+      - name: sku_listing_content_by_id
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/content/$(uri_captures.content_id)"
 
-      # - name: sku_listing_update_active_content
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/update-active-content"'
+      - name: sku_listing_validate_upload_file
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/validate-upload-validation-file$"' 
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/validate-upload-validation-file"
 
-      # - name: sku_listing_validate_file
-      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-listing-validation-file/(?<listing_validation_file_id>[^/]+)"'
+      - name: sku_listing_regenerate_content  
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)/regenerate$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/content/$(uri_captures.content_id)/regenerate"
 
-      # - name: sku_listing_marketplace_op
-      #   expression: 'http.path == "/sku-listing/marketplace-specific-operation"'
+      - name: sku_listing_update_active_content
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/content/update-active-content$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/content/update-active-content"
 
-      # - name: sku_listing_marketplace_profile_credentials
-      #   expression: 'http.path == "/sku-listing/marketplace-profile/credentials"'
+      - name: sku_listing_validate_file
+        expression: 'http.path ~ "^/api/sku-listing/(?<sku_listing_id>[^/]+)/validate-listing-validation-file/(?<listing_validation_file_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/$(uri_captures.sku_listing_id)/validate-listing-validation-file/$(uri_captures.listing_validation_file_id)"
 
-      # - name: a_plus_content_all
-      #   expression: 'http.path == "/sku-listing/a-plus-content"'
+      - name: sku_listing_marketplace_op
+        expression: 'http.path == "/api/sku-listing/marketplace-specific-operation"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/marketplace-specific-operation"
 
-      # - name: a_plus_content_by_id
-      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/get-sku-listing"'
+      - name: sku_listing_marketplace_profile_credentials
+        expression: 'http.path == "/api/sku-listing/marketplace-profile/credentials"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/marketplace-profile/credentials"
 
-      # - name: a_plus_content_brand_all
-      #   expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+      - name: a_plus_content_all
+        expression: 'http.path == "/api/sku-listing/a-plus-content"' 
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content"
 
-      # - name: a_plus_content_create
-      #   expression: 'http.path == "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+      - name: a_plus_content_by_id
+        expression: 'http.path ~ "^/api/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/get-sku-listing$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/$(uri_captures.a_plus_content_id)/get-sku-listing"
 
-      # - name: a_plus_content_by_id_and_brand
-      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)"'
+      - name: a_plus_content_brand_all
+        expression: ' http.method == "GET" && http.path ~ "^/api/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/brand/$(uri_captures.brand_id)"
 
-      # - name: a_plus_content_upload_media
-      #   expression: 'http.path == "/sku-listing/a-plus-content/upload-media"'
+      - name: a_plus_content_create
+        expression: 'http.method == "POST" && http.path ~ "^/api/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/brand/$(uri_captures.brand_id)"
 
-      # - name: a_plus_content_update
-      #   expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)/(?<a_plus_content_id>[^/]+)"'
+      - name: a_plus_content_by_id_and_brand
+        expression: 'http.path ~ "^/api/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/$(uri_captures.a_plus_content_id)/brand/$(uri_captures.brand_id)"
 
-      # - name: a_plus_content_assign_listing
-      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)/assign-listing"'
+      - name: a_plus_content_upload_media
+        expression: 'http.path == "/api/sku-listing/a-plus-content/upload-media"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/upload-media"
 
-      # - name: webhook_amazon
-      #   expression: 'http.path == "/webhook/amazon"'
+      - name: a_plus_content_update
+        expression: 'http.path ~ "^/api/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)/(?<a_plus_content_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/brand/$(uri_captures.brand_id)/$(uri_captures.a_plus_content_id)"
 
-      # - name: auth_login
-      #   expression: 'http.path == "/auth/login"'
+      - name: a_plus_content_assign_listing
+        expression: 'http.path ~ "^/api/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)/assign-listing$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/sku-listing/a-plus-content/$(uri_captures.a_plus_content_id)/brand/$(uri_captures.brand_id)/assign-listing"
 
-      # - name: auth_refresh
-      #   expression: 'http.path == "/auth/refresh-token"'
+      - name: webhook_amazon
+        expression: 'http.path == "/api/webhook/amazon"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/webhook/amazon"
 
-      # - name: auth_user
-      #   expression: 'http.path == "/auth/user"'
+      - name: auth_login
+        expression: 'http.path == "/api/auth/login"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/auth/login"
 
-      # - name: brand_upsert
-      #   expression: 'http.path == "/brand-management/upsert-brand"'
+      - name: auth_refresh
+        expression: 'http.path == "/api/auth/refresh-token"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/auth/refresh-token"
 
-      # - name: brand_members
-      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/members"'
+      - name: auth_user
+        expression: 'http.method == "GET" && http.path == "/api/auth/user"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/auth/user"
 
-      # - name: brand_add_member
-      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member$"'
+      - name: auth_all_roles
+        expression: 'http.path == "/api/auth/roles"' 
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/auth/roles"
 
-      # - name: brand_update_member
-      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+      - name: auth_roles_create
+        expression: 'http.method == "POST" && http.path == "/api/auth/roles"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/auth/roles"
 
-      # - name: brand_delete_member
-      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+      - name: auth_roles_by_name
+        expression: 'http.method == "GET" && http.path ~ "^/api/auth/roles/(?<role_name>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/auth/roles/$(uri_captures.role_name)"
 
-      # - name: sku_registry_csv_parser
-      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku/csv-parser"'
+      - name: auth_update_role_by_name
+        expression: 'http.method == "PATCH" && http.path ~ "^/api/auth/roles/(?<role_name>[^/]+)$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/auth/roles/$(uri_captures.role_name)"
+      
 
-      # - name: sku_registry_save
-      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+      - name: brand_upsert
+        expression: 'http.path == "/api/brand-management/upsert-brand"' # CHANGED
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/upsert-brand"
 
-      # - name: sku_registry_update
-      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+      - name: brand_members
+        expression: 'http.path ~ "^/api/brand-management/(?<brand_id>[^/]+)/members$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/$(uri_captures.brand_id)/members"
 
-      # - name: sku_registry_all
-      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/sku"'
+      - name: brand_add_member
+        expression: 'http.path ~ "^/api/brand-management/(?<brand_id>[^/]+)/member$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/$(uri_captures.brand_id)/member"
 
-      # - name: sku_registry_upload_file
-      #   expression: 'http.path == "/sku-registry/v2/sku/file"'
+      - name: brand_update_member
+        expression: 'http.method == "PATCH" && http.path ~ "^/api/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/$(uri_captures.brand_id)/member/$(uri_captures.member_id)"
 
-      # - name: sku_registry_get_mfn_sku
-      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku/(?<mfn_sku_id>[^/]+)"'
+      - name: brand_delete_member
+        expression: 'http.method == "DELETE" && http.path ~ "^/api/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/$(uri_captures.brand_id)/member/$(uri_captures.member_id)"
 
-      # - name: sku_registry_all_mfn_sku
-      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku"'
+      - name: brand_send_email
+        expression: 'http.path == "/api/brand-management/send-email"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/brand-management/send-email"
+       
+      - name: sku_registry_csv_parser
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/sku/csv-parser$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/sku/csv-parser"
 
-      # - name: sku_registry_brand_all
-      #   expression: 'http.path == "/sku-registry/brand/all"'
+      - name: sku_registry_save
+        expression: ' http.method == "POST" && http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/sku$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/sku"
 
-      # - name: sku_registry_brand
-      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)"'
+      - name: sku_registry_update
+        expression: 'http.method == "PATCH" && http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/sku$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/sku"
 
-      # - name: sku_registry_brand_onboarding
-      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/onboarding/(?<onboarding_step_name>[^/]+)"'
+      - name: sku_registry_all
+        expression: 'http.method == "GET" && http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/sku$"' # UNCHANGED (requires capture)
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/sku"
 
-      # - name: sku_registry_brand_file
-      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/file"'
+      - name: sku_registry_upload_file
+        expression: 'http.path == "/api/sku-registry/v2/sku/file"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/v2/sku/file"
 
+      - name: sku_registry_get_mfn_sku
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku/(?<mfn_sku_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/mfn_sku/$(uri_captures.mfn_sku_id)"
+
+      - name: sku_registry_all_mfn_sku
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku$"' 
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/mfn_sku"
+
+      - name: sku_registry_brand_all
+        expression: 'http.path == "/api/sku-registry/brand/all"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/all"
+
+      - name: sku_registry_brand
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)"
+
+      - name: sku_registry_brand_onboarding
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/onboarding/(?<onboarding_step_name>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/onboarding/$(uri_captures.onboarding_step_name)"
+
+      - name: sku_registry_brand_file
+        expression: 'http.path ~ "^/api/sku-registry/brand/(?<brand_id>[^/]+)/file$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-registry/brand/$(uri_captures.brand_id)/file"
+
+      - name: epic_management_all_members
+        expression: 'http.method == "GET" && http.path == "/api/epic-management/members"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/epic-management/members"
+
+      - name: epic_management_members_create
+        expression: 'http.method == "POST" && http.path == "/api/epic-management/members"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/epic-management/members"
+
+      - name: epic_management_members_update
+        expression: 'http.path ~ "^/api/epic-management/members/(?<member_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/epic-management/members/$(uri_captures.member_id)"
+      
+      - name: epic_management_send_email 
+        expression: 'http.path == "/api/epic-management/send-email"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/epic-management/send-email"
   
+      - name: sku_listing_parentage_by_brand_name
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/parentage/(?<parentage_name>[^/]+)$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/parentage/$(uri_captures.parentage_name)"
+
+      - name: sku_listing_parentage_generate_variant
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/parentage/(?<parentage_name>[^/]+)/(?<parentage_id>[^/]+)/generate-variant$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/generate-variant"
+
+      - name: sku_listing_parentage_variant_mapping
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/parentage/(?<parentage_name>[^/]+)/(?<parentage_id>[^/]+)/variant-listing-mapping$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
+      
+      - name: sku_listing_parentage_variant_type_values 
+        expression: 'http.path ~ "^/api/sku-listing/brand/(?<brand_id>[^/]+)/parentage/(?<parentage_name>[^/]+)/variant-type-values$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/brand/$(uri_captures.brand_id)/parentage/$(uri_captures.parentage_name)/variant-type-values"
+
+      - name: sku_listing_parentage_update_variant_mapping
+        expression: 'http.path ~ "^/api/sku-listing/parentage/(?<parentage_name>[^/]+)/(?<parentage_id>[^/]+)/variant-listing-mapping$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
+        expression: 'http.path ~ "^/api/sku-listing/parentage/(?<parentage_name>[^/]+)/(?<parentage_id>[^/]+)/variant-listing-mapping$"'
+        strip_path: false
+        plugins:
+        - name: request-transformer
+          config:
+            replace:
+              uri: "/sku-listing/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
+
+
   # Contracts Service Routes
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000/
