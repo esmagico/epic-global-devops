@@ -22,34 +22,71 @@ services:
     url: http://epic_global_ai:5000
     routes:
       - name: submit_task_route
-        expression: 'http.path ^= "/ai/submit-task"'
+        expression: 'http.path ~ "^/ai/submit-task$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
-                uri: "/submit-task" # though for this case only having super_route would be enough but this is better for monitoring purpose
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
+                uri: "/submit-task"
       - name: ai_route
-        expression: 'http.path ^= "/ai"' # Place super route at bottom to lower its priority
+        expression: 'http.path ~ "^/ai"'
       - name: parse_contract_route
-        expression: 'http.path ^= "/parse-contract"'
+        expression: 'http.path ~ "^/ai/parse-contract$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/parse-contract"
       - name: parse_contact_route
-        expression: 'http.path ^= "/parse-contact"'
+        expression: 'http.path ~ "^/ai/parse-contact$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/parse-contact"
       - name: generate_content_route
-        expression: 'http.path ^= "/generate-content"'
+        expression: 'http.path ~ "^/ai/generate-content$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/generate-content"
       - name: execute_route
-        expression: 'http.path ^= "/execute"'
+        expression: 'http.path ~ "^/ai/execute$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/execute"
       - name: get_prompts_route
-        expression: 'http.path ^= "/prompts"'
+        expression: 'http.path ~ "^/ai/prompts$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/prompts"
       - name: get_similarity_score_route
-        expression: 'http.path ^= "/get-similarity-score"'
+        expression: 'http.path ~ "^/ai/get-similarity-score$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/get-similarity-score"
       - name: home_route
-        expression: 'http.path == "/"'
+        expression: 'http.path ~ "^/ai$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/"
         
 # Backend Routes
   - name: epic_global_backend
@@ -610,177 +647,239 @@ services:
           config:
             replace:
               uri: "/sku-listing/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
-        expression: 'http.path ~ "^/api/sku-listing/parentage/(?<parentage_name>[^/]+)/(?<parentage_id>[^/]+)/variant-listing-mapping$"'
-        strip_path: false
-        plugins:
-        - name: request-transformer
-          config:
-            replace:
-              uri: "/sku-listing/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
 
 
   # Contracts Service Routes
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000/
     routes:
-      - name: contracts_superroute
-        expression: 'http.path ^= "/brands"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: compilance_submit
-        expression: 'http.path == "/contracts/compliance/upload"'
+        expression: 'http.path ~ "^/contracts/compliance/upload$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
                 uri: "/compliance/upload"
-      # - name: create_brand_route
-      #   expression: 'http.path ^= "/contracts/contract/brand"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: upload_contract_route
-      #   expression: 'http.path ^= "/contracts/contract/upload/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: upload_contact_route
-      #   expression: 'http.path ^= "/contracts/contact/upload/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: delete_contract_route
-      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: contract_summary_route
-      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/summary"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: contact_summary_route
-      #   expression: 'http.path ^= "/contracts/contact/(?<brand_id>[^/]+)/summary"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: parse_contract_route_backend
-      #   expression: 'http.path ^= "/contracts/contract/parse/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: update_consent_route
-      #   expression: 'http.path ^= "/contracts/contract/(?<brand_id>[^/]+)/consent"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: upload_compliance_route
-      #   expression: 'http.path ^= "/contracts/compliance/upload"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: link_compliance_route
-      #   expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)/link"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-      # - name: compliance_forms_route
-      #   expression: 'http.path ^= "/contracts/compliance/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
-
-      # - name: get_brand_route
-      #   expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30 
-      #         policy: local
-
-      # - name: update_brand_route
-      #   expression: 'http.path ^= "/contracts/brand/(?<brand_id>[^/]+)"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30 
-      #         policy: local
-
-      # - name: save_parsed_contract_data_route
-      #   expression: 'http.path ^= "/contracts/save-parsed-contract-data"'
-      #   plugins:
-      #     - name: rate-limiting
-      #       config:
-      #         second: 30
-      #         policy: local
+      - name: create_brand_route
+        expression: 'http.path ~ "^/contracts/contract/brand$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/brand"
+      - name: upload_contract_route
+        expression: 'http.path ~ "^/contracts/contract/upload/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/upload/$(uri_captures.brand_id)"
+      - name: upload_contact_route
+        expression: 'http.path ~ "^/contracts/contact/upload/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contact/upload/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: delete_contract_route
+        expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: contract_summary_route
+        expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)/summary$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/$(uri_captures.brand_id)/summary"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: contact_summary_route
+        expression: 'http.path ~ "^/contracts/contact/(?<brand_id>[^/]+)/summary$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contact/$(uri_captures.brand_id)/summary"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: parse_contract_route_backend
+        expression: 'http.path ~ "^/contracts/contract/parse/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/parse/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: update_consent_route
+        expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)/consent$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/contract/$(uri_captures.brand_id)/consent"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: link_compliance_route
+        expression: 'http.path ~ "^/contracts/compliance/(?<brand_id>[^/]+)/link$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/compliance/$(uri_captures.brand_id)/link"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: compliance_forms_route
+        expression: 'http.path ~ "^/contracts/compliance/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/compliance/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: get_brand_route
+        expression: 'http.path ~ "^/contracts/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/brand/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: update_brand_route
+        expression: 'http.path ~ "^/contracts/brand/(?<brand_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/brand/$(uri_captures.brand_id)"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
+      - name: save_parsed_contract_data_route
+        expression: 'http.path ~ "^/contracts/save-parsed-contract-data$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/save-parsed-contract-data"
+          - name: rate-limiting
+            config:
+              second: 30
+              policy: local
 
   # Context Service Routes
   - name: context_service
     url: http://context_service:3000
     routes:
-      # - name: context_service_validate
-      #   expression: 'http.method == "POST" && http.path == "/context/validate"'
-      #   strip_path: false # higer priority than /context as validate is matched as prefix
       - name: context_validate
-        expression: 'http.path == "/context/context/validate"'
+        expression: 'http.path ~ "^/context/context/validate$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
                 uri: "/context/validate"
-      - name: context_superroute
-        expression: 'http.path ^= "/context"' # Make sure super route as least priority.
-        strip_path: true
-      # - name: context_service_submit_test
-      #   expression: 'http.method == "POST" && http.path == "/context/api/submitTest"'
-      #   strip_path: true
-      # - name: context_service_status
-      #   expression: 'http.method == "GET" && http.path ~ "^/context/api/status/[^/]+$"'
-      #   strip_path: true
-      # - name: context_service_validate
-      #   expression: 'http.method == "POST" && http.path == "/context/context/validate"'
-      #   strip_path: true
+      - name: context_service_submit_test
+        expression: 'http.path ~ "^/context/api/submitTest$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/api/submitTest"
+      - name: context_service_status
+        expression: 'http.path ~ "^/context/api/status/(?<status_id>[^/]+)$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/api/status/$(uri_captures.status_id)"
 
 # Image Service Routes
   - name: image_service
     url: http://image_service:5000
     routes:
-      - name: image_superroute
-        expression: 'http.path ^= "/images"'
-      # - name: image_service_root
-      #   expression: 'http.method == "GET" && http.path == "/"'
-      # - name: image_service_check_compliance
-      #   expression: 'http.method == "POST" && http.path == "/images/check-compliance"'
-      # - name: image_service_delete_guidelines
-      #   expression: 'http.method == "DELETE" && http.path == "/images/delete-guidelines"'
-      # - name: image_service_ingest
-      #   expression: 'http.method == "POST" && http.path == "/images/ingest"'
-      # - name: image_service_retrieve_guidelines
-      #   expression: 'http.method == "GET" && http.path == "/images/retrieve-guidelines"'
+      - name: image_service_root
+        expression: 'http.path ~ "^/images$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/"
+      - name: image_service_check_compliance
+        expression: 'http.path ~ "^/images/check-compliance$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/check-compliance"
+      - name: image_service_delete_guidelines
+        expression: 'http.path ~ "^/images/delete-guidelines$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/delete-guidelines"
+      - name: image_service_ingest
+        expression: 'http.path ~ "^/images/ingest$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/ingest"
+      - name: image_service_retrieve_guidelines
+        expression: 'http.path ~ "^/images/retrieve-guidelines$"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/retrieve-guidelines"
