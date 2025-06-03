@@ -1,3 +1,4 @@
 import ./common/kong/Caddyfile
 import ./common/keycloak/Caddyfile
+import ./common/monitoring/Caddyfile
 import ./epic/Caddyfile

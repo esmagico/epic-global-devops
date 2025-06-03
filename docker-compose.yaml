@@ -4,6 +4,7 @@ include:
  - ./common/rabbitmq/docker-compose.yaml
  - ./common/keycloak/docker-compose.yaml
  - ./common/kong/docker-compose.yaml
+ - ./common/monitoring/docker-compose.yaml
  - ./epic/docker-compose.yaml
 
 services:
