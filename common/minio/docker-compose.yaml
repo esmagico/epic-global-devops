@@ -4,7 +4,7 @@ volumes:
 
 services:
   minio:
-    image: minio/minio
+    image: minio/minio@sha256:a1ea29fa28355559ef137d71fc570e508a214ec84ff8083e39bc5428980b015e
     restart: always
     volumes:
       - minio:/data
@@ -14,7 +14,7 @@ services:
     command: server --console-address ":9001" /data
 
   minio_helper:
-    image: minio/mc
+    image: minio/mc@sha256:aead63c77f9db9107f1696fb08ecb0faeda23729cde94b0f663edf4fe09728e3
     volumes:
       - './kickstart.sh:/etc/minio/kickstart.sh'
     entrypoint: /etc/minio/kickstart.sh
