@@ -10,11 +10,11 @@ plugins:
       bandwidth_metrics: true
       upstream_health_metrics: true
 
-  - name: rate-limiting
-    enabled: true
-    config:
-      minute: 100
-      policy: local
+  # - name: rate-limiting
+  #   enabled: true
+  #   config:
+  #     minute: 100
+  #     policy: local
 
 services:
   # Ai service routes
@@ -23,27 +23,28 @@ services:
     routes:
       - name: ai_route
         expression: 'http.path ^= "/ai"'
-      - name: submit_task_route
-        expression: 'http.path ^= "/submit-task"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
-      - name: parse_contract_route
-        expression: 'http.path ^= "/parse-contract"'
-      - name: parse_contact_route
-        expression: 'http.path ^= "/parse-contact"'
-      - name: generate_content_route
-        expression: 'http.path ^= "/generate-content"'
-      - name: execute_route
-        expression: 'http.path ^= "/execute"'
-      - name: get_prompts_route
-        expression: 'http.path ^= "/prompts"'
-      - name: get_similarity_score_route
-        expression: 'http.path ^= "/get-similarity-score"'
-      - name: home_route
-        expression: 'http.path == "/"'
+        strip_path: true
+      # - name: submit_task_route
+      #   expression: 'http.path ^= "/submit-task"'
+        # plugins:
+        #   - name: rate-limiting
+        #     config:
+        #       second: 30
+        #       policy: local
+      # - name: parse_contract_route
+      #   expression: 'http.path ^= "/parse-contract"'
+      # - name: parse_contact_route
+      #   expression: 'http.path ^= "/parse-contact"'
+      # - name: generate_content_route
+      #   expression: 'http.path ^= "/generate-content"'
+      # - name: execute_route
+      #   expression: 'http.path ^= "/execute"'
+      # - name: get_prompts_route
+      #   expression: 'http.path ^= "/prompts"'
+      # - name: get_similarity_score_route
+      #   expression: 'http.path ^= "/get-similarity-score"'
+      # - name: home_route
+      #   expression: 'http.path == "/"'
         
 # Backend Routes
   - name: epic_global_backend
@@ -51,145 +52,146 @@ services:
     routes:
       - name: backend_route
         expression: 'http.path ^= "/api"'
-        plugins:
-          - name: request-size-limiting
-            config:
-              allowed_payload_size: 50
-              require_content_length: false
-
-      - name: sku_listing_category
-        expression: 'http.path == "/sku-listing/category"'
+        strip_path: true
         # plugins:
-        #   - name: rate-limiting
+        #   - name: request-size-limiting
         #     config:
-        #       second: 30
-        #       policy: local
+        #       allowed_payload_size: 50
+        #       require_content_length: false
 
-      - name: sku_listing_mfn_sku
-        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)"'
+      # - name: sku_listing_category
+      #   expression: 'http.path == "/sku-listing/category"'
+      #   # plugins:
+      #   #   - name: rate-limiting
+      #   #     config:
+      #   #       second: 30
+      #   #       policy: local
 
-      - name: sku_listing_bulk_listing_manager
-        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/bulk-listing-manager"'
+      # - name: sku_listing_mfn_sku
+      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)"'
 
-      - name: sku_listing_update_listing_category
-        expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/update-listing-category"'
+      # - name: sku_listing_bulk_listing_manager
+      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/bulk-listing-manager"'
 
-      - name: sku_listing_v2
-        expression: 'http.path ^= "/sku-listing/v2/(?<sku_listing_id>[^/]+)"'
+      # - name: sku_listing_update_listing_category
+      #   expression: 'http.path ^= "/sku-listing/mfn-sku/(?<mfn_sku>[^/]+)/update-listing-category"'
 
-      - name: sku_listing_bulk_update
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/bulk-update"'
+      # - name: sku_listing_v2
+      #   expression: 'http.path ^= "/sku-listing/v2/(?<sku_listing_id>[^/]+)"'
 
-      - name: sku_listing_queue
-        expression: 'http.path == "/sku-listing/queue"'
+      # - name: sku_listing_bulk_update
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/bulk-update"'
 
-      - name: sku_listing_content_all
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/all"'
+      # - name: sku_listing_queue
+      #   expression: 'http.path == "/sku-listing/queue"'
 
-      - name: sku_listing_content_by_id
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)"'
+      # - name: sku_listing_content_all
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/all"'
 
-      - name: sku_listing_validate_upload_file
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-upload-validation-file"'
+      # - name: sku_listing_content_by_id
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)"'
 
-      - name: sku_listing_regenerate_content
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)/regenerate"'
+      # - name: sku_listing_validate_upload_file
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-upload-validation-file"'
 
-      - name: sku_listing_update_active_content
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/update-active-content"'
+      # - name: sku_listing_regenerate_content
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/(?<content_id>[^/]+)/regenerate"'
 
-      - name: sku_listing_validate_file
-        expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-listing-validation-file/(?<listing_validation_file_id>[^/]+)"'
+      # - name: sku_listing_update_active_content
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/content/update-active-content"'
 
-      - name: sku_listing_marketplace_op
-        expression: 'http.path == "/sku-listing/marketplace-specific-operation"'
+      # - name: sku_listing_validate_file
+      #   expression: 'http.path ^= "/sku-listing/(?<sku_listing_id>[^/]+)/validate-listing-validation-file/(?<listing_validation_file_id>[^/]+)"'
 
-      - name: sku_listing_marketplace_profile_credentials
-        expression: 'http.path == "/sku-listing/marketplace-profile/credentials"'
+      # - name: sku_listing_marketplace_op
+      #   expression: 'http.path == "/sku-listing/marketplace-specific-operation"'
 
-      - name: a_plus_content_all
-        expression: 'http.path == "/sku-listing/a-plus-content"'
+      # - name: sku_listing_marketplace_profile_credentials
+      #   expression: 'http.path == "/sku-listing/marketplace-profile/credentials"'
 
-      - name: a_plus_content_by_id
-        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/get-sku-listing"'
+      # - name: a_plus_content_all
+      #   expression: 'http.path == "/sku-listing/a-plus-content"'
 
-      - name: a_plus_content_brand_all
-        expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+      # - name: a_plus_content_by_id
+      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/get-sku-listing"'
 
-      - name: a_plus_content_create
-        expression: 'http.path == "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
+      # - name: a_plus_content_brand_all
+      #   expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
 
-      - name: a_plus_content_by_id_and_brand
-        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)"'
+      # - name: a_plus_content_create
+      #   expression: 'http.path == "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)"'
 
-      - name: a_plus_content_upload_media
-        expression: 'http.path == "/sku-listing/a-plus-content/upload-media"'
+      # - name: a_plus_content_by_id_and_brand
+      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)"'
 
-      - name: a_plus_content_update
-        expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)/(?<a_plus_content_id>[^/]+)"'
+      # - name: a_plus_content_upload_media
+      #   expression: 'http.path == "/sku-listing/a-plus-content/upload-media"'
 
-      - name: a_plus_content_assign_listing
-        expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)/assign-listing"'
+      # - name: a_plus_content_update
+      #   expression: 'http.path ^= "/sku-listing/a-plus-content/brand/(?<brand_id>[^/]+)/(?<a_plus_content_id>[^/]+)"'
 
-      - name: webhook_amazon
-        expression: 'http.path == "/webhook/amazon"'
+      # - name: a_plus_content_assign_listing
+      #   expression: 'http.path ^= "/sku-listing/a-plus-content/(?<a_plus_content_id>[^/]+)/brand/(?<brand_id>[^/]+)/assign-listing"'
 
-      - name: auth_login
-        expression: 'http.path == "/auth/login"'
+      # - name: webhook_amazon
+      #   expression: 'http.path == "/webhook/amazon"'
 
-      - name: auth_refresh
-        expression: 'http.path == "/auth/refresh-token"'
+      # - name: auth_login
+      #   expression: 'http.path == "/auth/login"'
 
-      - name: auth_user
-        expression: 'http.path == "/auth/user"'
+      # - name: auth_refresh
+      #   expression: 'http.path == "/auth/refresh-token"'
 
-      - name: brand_upsert
-        expression: 'http.path == "/brand-management/upsert-brand"'
+      # - name: auth_user
+      #   expression: 'http.path == "/auth/user"'
 
-      - name: brand_members
-        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/members"'
+      # - name: brand_upsert
+      #   expression: 'http.path == "/brand-management/upsert-brand"'
 
-      - name: brand_add_member
-        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member$"'
+      # - name: brand_members
+      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/members"'
 
-      - name: brand_update_member
-        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+      # - name: brand_add_member
+      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member$"'
 
-      - name: brand_delete_member
-        expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
+      # - name: brand_update_member
+      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
 
-      - name: sku_registry_csv_parser
-        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku/csv-parser"'
+      # - name: brand_delete_member
+      #   expression: 'http.path ^= "/brand-management/(?<brand_id>[^/]+)/member/(?<member_id>[^/]+)"'
 
-      - name: sku_registry_save
-        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+      # - name: sku_registry_csv_parser
+      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku/csv-parser"'
 
-      - name: sku_registry_update
-        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
+      # - name: sku_registry_save
+      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
 
-      - name: sku_registry_all
-        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/sku"'
+      # - name: sku_registry_update
+      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/sku$"'
 
-      - name: sku_registry_upload_file
-        expression: 'http.path == "/sku-registry/v2/sku/file"'
+      # - name: sku_registry_all
+      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/sku"'
 
-      - name: sku_registry_get_mfn_sku
-        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku/(?<mfn_sku_id>[^/]+)"'
+      # - name: sku_registry_upload_file
+      #   expression: 'http.path == "/sku-registry/v2/sku/file"'
 
-      - name: sku_registry_all_mfn_sku
-        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku"'
+      # - name: sku_registry_get_mfn_sku
+      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku/(?<mfn_sku_id>[^/]+)"'
 
-      - name: sku_registry_brand_all
-        expression: 'http.path == "/sku-registry/brand/all"'
+      # - name: sku_registry_all_mfn_sku
+      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/mfn_sku"'
 
-      - name: sku_registry_brand
-        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)"'
+      # - name: sku_registry_brand_all
+      #   expression: 'http.path == "/sku-registry/brand/all"'
 
-      - name: sku_registry_brand_onboarding
-        expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/onboarding/(?<onboarding_step_name>[^/]+)"'
+      # - name: sku_registry_brand
+      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)"'
 
-      - name: sku_registry_brand_file
-        expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/file"'
+      # - name: sku_registry_brand_onboarding
+      #   expression: 'http.path ^= "/sku-registry/brand/(?<brand_id>[^/]+)/onboarding/(?<onboarding_step_name>[^/]+)"'
+
+      # - name: sku_registry_brand_file
+      #   expression: 'http.path == "/sku-registry/brand/(?<brand_id>[^/]+)/file"'
 
   
   # Contracts Service Routes
@@ -197,12 +199,13 @@ services:
     url: http://epic_global_contracts:5000
     routes:
       - name: contracts_superroute
-        expression: 'http.path ^= "/contracts"'
-        plugins:
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
+        expression: 'http.path ^= "/brand"'
+        strip_path: true
+        # plugins:
+        #   - name: rate-limiting
+        #     config:
+        #       second: 30
+        #       policy: local
       # - name: create_brand_route
       #   expression: 'http.path ^= "/contracts/contract/brand"'
       #   plugins:
@@ -323,11 +326,11 @@ services:
       #   strip_path: true
 
 # Image Service Routes
-  - name: image_service
-    url: http://image_service:5000
-    routes:
-      - name: image_superroute
-        expression: 'http.path ^= "/images"'
+  # - name: image_service
+  #   url: http://image_service:5000
+  #   routes:
+  #     - name: image_superroute
+        # expression: 'http.path ^= "/images"'
       # - name: image_service_root
       #   expression: 'http.method == "GET" && http.path == "/"'
       # - name: image_service_check_compliance
