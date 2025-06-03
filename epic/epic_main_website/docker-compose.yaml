@@ -1,4 +1,0 @@
-services:
-  epic_main_website:
-      image: ghcr.io/${org}/epic-main-website:${EPIC_MAIN_WEBSITE_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
-      restart: always

@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://context.{$DOMAIN_NAME} {
-    reverse_proxy context_service:3000
-}
