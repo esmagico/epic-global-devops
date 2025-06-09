@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://rabbitmq.{$DOMAIN_NAME} {
-    reverse_proxy rabbitmq:15672
-}
