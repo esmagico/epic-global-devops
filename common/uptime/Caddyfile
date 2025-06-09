@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://uptime.{$DOMAIN_NAME} {
-    reverse_proxy uptime:3001
-}
