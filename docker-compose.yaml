@@ -1,14 +1,2 @@
 include:
- - ./common/vault/docker-compose.yaml
  - ./common/db/docker-compose.yaml
-services:
-  caddy:
-    extends:
-      file: common/caddy/docker-compose.yaml
-      service: caddy
-    volumes:
-    #  - ./epic:/etc/caddy/epic
-
-volumes:
-  caddy_data:
-  caddy_config:

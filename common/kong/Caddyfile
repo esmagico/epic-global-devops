@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://kong.{$DOMAIN_NAME} {
-    reverse_proxy kong:8000
-}

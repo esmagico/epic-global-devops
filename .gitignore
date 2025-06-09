@@ -3,5 +3,5 @@
 deploy.log
 scripts/webhook/hooks.json
 # Ignore SSL certs and keys
-postgres_conf/ssl/server.crt
-postgres_conf/ssl/server.key
+common/db/postgres_conf/ssl/server.key
+common/db/postgres_conf/ssl/server.crt

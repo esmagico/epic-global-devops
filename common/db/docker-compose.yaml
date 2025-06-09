@@ -3,27 +3,49 @@ services:
     image: postgres:17.2
     restart: always
     volumes:
-      - db:/var/lib/postgresql/data
+      - db:/var/lib/postgresql/data  
       - ./postgres_conf/postgresql.conf:/etc/postgresql/postgresql.conf
       - ./postgres_conf/pg_hba.conf:/etc/postgresql/pg_hba.conf
       - ./postgres_conf/ssl/server.crt:/etc/postgresql/server.crt
       - ./postgres_conf/ssl/server.key:/etc/postgresql/server.key
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:?POSTGRES_USER is not set}", "-d", "${POSTGRES_DB:?POSTGRES_DB is not set}"]
       interval: 5s
       timeout: 5s
       retries: 5
     ports:
       - 5432:5432
     command:
-      - "postgres"
-      - "-c"
-      - "config_file=/etc/postgresql/postgresql.conf"
+             - "postgres"
+             - "-c"
+             - "config_file=/etc/postgresql/postgresql.conf"
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is not set}
+      PG_MAX_CONNECTIONS: 1000   # to test we are putting 1000 
 
+  pgbouncer:
+    image: edoburu/pgbouncer
+    restart: always
+    depends_on:
+      - db
+    volumes:
+      - ./pgbouncer/pgbouncer.ini:/etc/pgbouncer/pgbouncer.ini
+      - ./pgbouncer/userlist.txt:/etc/pgbouncer/userlist.txt
+      - ./postgres_conf/ssl/server.crt:/etc/ssl/server.crt
+      - ./postgres_conf/ssl/server.key:/etc/ssl/server.key
+    ports:
+      - "6432:6432"
+    environment:
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
+    healthcheck:
+      test: ["CMD", "pg_isready", "-h", "localhost", "-p", "6432", "-U", "${POSTGRES_USER}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   db:
