@@ -1,6 +1,7 @@
 include:
 
  - ./common/vault/docker-compose.yaml
+ - ./common/monitoring/docker-compose.yaml
  - ./epic/docker-compose.yaml
 
 services:

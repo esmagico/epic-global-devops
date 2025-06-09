@@ -1,2 +1,2 @@
-import ./common/vault/Caddyfile
+import ./common/monitoring/Caddyfile
 import ./epic/Caddyfile
