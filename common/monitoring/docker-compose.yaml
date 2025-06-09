@@ -1,5 +1,4 @@
 services:
-
   node_exporter:
     image: prom/node-exporter:v1.8.2
     hostname: ${org}-${env}
@@ -33,7 +32,7 @@ services:
     image: grafana/promtail:2.9.5 
     restart: always
     volumes:
-      - '/var/lib/docker/containers:/var/lib/docker/containers:ro'    #config of docker bath to be changed as per the disk
+      - '/mnt/data/docker/containers:/var/lib/docker/containers:ro'    #config of docker bath to be changed as per the disk
       - './loki/promtail-config.yaml:/etc/promtail/promtail-config.yaml'
       - '/var/run/docker.sock:/var/run/docker.sock'
     command: -config.file=/etc/promtail/promtail-config.yaml
