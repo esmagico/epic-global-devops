@@ -1,3 +1,7 @@
-{$DOMAIN_SCHEME}://grafana.{$DOMAIN_NAME} {
-    reverse_proxy grafana:3000
+{$DOMAIN_SCHEME}://node-exporter.fe.{$DOMAIN_NAME} {
+    reverse_proxy node_exporter:9100
+}
+
+{$DOMAIN_SCHEME}://cadvisor.fe.{$DOMAIN_NAME} {
+    reverse_proxy cadvisor:8080
 }
