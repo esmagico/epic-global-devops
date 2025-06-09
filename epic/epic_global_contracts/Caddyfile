@@ -1,3 +1,0 @@
-{$DOMAIN_SCHEME}://contracts.{$DOMAIN_NAME} {
-    reverse_proxy epic_global_contracts:5000
-}
