@@ -1,6 +1,6 @@
 services:
   weaviate:
-    image: semitechnologies/weaviate:latest
+    image: semitechnologies/weaviate:1.31.1-509541d.amd64
     ports:
       - "8080:8080"
       - "50051:50051"
