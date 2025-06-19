@@ -11,6 +11,7 @@ plugins:
       upstream_health_metrics: true
 
 services:
+
   # Ai service routes
   - name: epic_global_ai
     url: http://epic_global_ai:5000
@@ -82,7 +83,8 @@ services:
               replace:
                 uri: "/"
         
-# Backend Routes
+
+  # Backend Routes
   - name: epic_global_backend
     url: http://epic_global_backend:3000
     routes:
@@ -643,6 +645,7 @@ services:
               uri: "/sku-listing/parentage/$(uri_captures.parentage_name)/$(uri_captures.parentage_id)/variant-listing-mapping"
 
 
+
   # Contracts Service Routes
   - name: epic_global_contracts
     url: http://epic_global_contracts:5000/
@@ -760,6 +763,8 @@ services:
               replace:
                 uri: "/save-parsed-contract-data"
 
+
+
   # Context Service Routes
   - name: context_service
     url: http://context_service:3000
@@ -788,6 +793,8 @@ services:
             config:
               replace:
                 uri: "/api/status/$(uri_captures.status_id)"
+
+
 
 # Image Service Routes
   - name: image_service
