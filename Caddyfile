@@ -1,7 +1,7 @@
 import ./common/monitoring/Caddyfile
 import ./common/minio/Caddyfile
 import ./common/hasura/Caddyfile
-import ./common/vault/Caddyfile
+# import ./common/vault/Caddyfile
 import ./common/kong/Caddyfile
 import ./common/keycloak/Caddyfile
 import ./epic/Caddyfile
