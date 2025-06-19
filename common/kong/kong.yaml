@@ -10,12 +10,6 @@ plugins:
       bandwidth_metrics: true
       upstream_health_metrics: true
 
-  - name: rate-limiting
-    enabled: true
-    config:
-      minute: 100
-      policy: local
-
 services:
   # Ai service routes
   - name: epic_global_ai
@@ -685,10 +679,6 @@ services:
             config:
               replace:
                 uri: "/contact/upload/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: delete_contract_route
         expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)$"'
         strip_path: false
@@ -697,10 +687,6 @@ services:
             config:
               replace:
                 uri: "/contract/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: contract_summary_route
         expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)/summary$"'
         strip_path: false
@@ -709,10 +695,6 @@ services:
             config:
               replace:
                 uri: "/contract/$(uri_captures.brand_id)/summary"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: contact_summary_route
         expression: 'http.path ~ "^/contracts/contact/(?<brand_id>[^/]+)/summary$"'
         strip_path: false
@@ -721,10 +703,6 @@ services:
             config:
               replace:
                 uri: "/contact/$(uri_captures.brand_id)/summary"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: parse_contract_route_backend
         expression: 'http.path ~ "^/contracts/contract/parse/(?<brand_id>[^/]+)$"'
         strip_path: false
@@ -733,10 +711,6 @@ services:
             config:
               replace:
                 uri: "/contract/parse/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: update_consent_route
         expression: 'http.path ~ "^/contracts/contract/(?<brand_id>[^/]+)/consent$"'
         strip_path: false
@@ -745,10 +719,6 @@ services:
             config:
               replace:
                 uri: "/contract/$(uri_captures.brand_id)/consent"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: link_compliance_route
         expression: 'http.path ~ "^/contracts/compliance/(?<brand_id>[^/]+)/link$"'
         strip_path: false
@@ -757,10 +727,6 @@ services:
             config:
               replace:
                 uri: "/compliance/$(uri_captures.brand_id)/link"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: compliance_forms_route
         expression: 'http.path ~ "^/contracts/compliance/(?<brand_id>[^/]+)$"'
         strip_path: false
@@ -769,10 +735,6 @@ services:
             config:
               replace:
                 uri: "/compliance/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: get_brand_route
         expression: 'http.path ~ "^/contracts/brand/(?<brand_id>[^/]+)$"'
         strip_path: false
@@ -781,10 +743,6 @@ services:
             config:
               replace:
                 uri: "/brand/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: update_brand_route
         expression: 'http.path ~ "^/contracts/brand/(?<brand_id>[^/]+)$"'
         strip_path: false
@@ -793,10 +751,6 @@ services:
             config:
               replace:
                 uri: "/brand/$(uri_captures.brand_id)"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
       - name: save_parsed_contract_data_route
         expression: 'http.path ~ "^/contracts/save-parsed-contract-data$"'
         strip_path: false
@@ -805,10 +759,6 @@ services:
             config:
               replace:
                 uri: "/save-parsed-contract-data"
-          - name: rate-limiting
-            config:
-              second: 30
-              policy: local
 
   # Context Service Routes
   - name: context_service
