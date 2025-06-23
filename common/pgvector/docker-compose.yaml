@@ -1,0 +1,17 @@
+services:
+  pgvector:
+    image: pgvector/pgvector:pg17
+    environment:
+      POSTGRES_USER: vector_user
+      POSTGRES_PASSWORD: strong_password
+      POSTGRES_DB: vector_db
+    volumes:
+      - pgvector:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U vector_user -d vector_db"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  pgvector:

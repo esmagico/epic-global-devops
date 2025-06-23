@@ -7,6 +7,7 @@ include:
   - ./common/kong/docker-compose.yaml
   - ./common/hasura/docker-compose.yaml
   - ./common/keycloak/docker-compose.yaml
+  - ./common/pgvector/docker-compose.yaml
   - ./epic/docker-compose.yaml
 
 services:
