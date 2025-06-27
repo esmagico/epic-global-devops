@@ -809,34 +809,42 @@ services:
               replace:
                 uri: "/"
       - name: image_service_check_compliance
-        expression: 'http.path ~ "^/images/check-compliance$"'
+        expression: 'http.path ~ "^/images/images/check-compliance$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
-                uri: "/check-compliance"
+                uri: "/images/check-compliance"
       - name: image_service_delete_guidelines
-        expression: 'http.path ~ "^/images/delete-guidelines$"'
+        expression: 'http.path ~ "^/images/images/delete-guidelines$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
-                uri: "/delete-guidelines"
+                uri: "/images/delete-guidelines"
       - name: image_service_ingest
-        expression: 'http.path ~ "^/images/ingest$"'
+        expression: 'http.path ~ "^/images/images/ingest$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
-                uri: "/ingest"
+                uri: "/images/ingest"
       - name: image_service_retrieve_guidelines
-        expression: 'http.path ~ "^/images/retrieve-guidelines$"'
+        expression: 'http.path ~ "^/images/images/retrieve-guidelines$"'
         strip_path: false
         plugins:
           - name: request-transformer
             config:
               replace:
-                uri: "/retrieve-guidelines"
+                uri: "/images/retrieve-guidelines"
+      - name: image_service_process_images
+        expression: 'http.path ~ "^/images/images/process-image"'
+        strip_path: false
+        plugins:
+          - name: request-transformer
+            config:
+              replace:
+                uri: "/images/process-image"
