@@ -1,28 +1,17 @@
-ifndef make_environment
-$(error Error: 'make_environment' is required. Use: make <target> make_environment=<env> services="svc1 svc2")
-endif
-
-# Compose override path: docker-compose-overrides/{UPPERCASE_ENV_DIR}/docker-compose.{make_environment}.yaml
-ENV_DIR := $(shell echo $(make_environment) | cut -d '-' -f 1 | tr '[:lower:]' '[:upper:]')
-OVERRIDE_FILE := docker-compose-overrides/$(ENV_DIR)/docker-compose.$(make_environment).yaml
-
 FORCE_RECREATE_FLAG := $(if $(filter 1,$(ENABLE_FORCE_RECREATE)),--force-recreate,)
-REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1,$(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
+REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1, $(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
 REMOVE_ANSI_FLAG := $(if $(filter 1,$(DISABLE_ANSI)),,--ansi never)
 
-DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p epic \
-	-f docker-compose.yaml \
-	-f $(OVERRIDE_FILE) 
+DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p epic
 
 # Function to validate services parameter
 define validate_services
 	@cmd_args="$(MAKEOVERRIDES)"; \
-	if echo "$$cmd_args" | grep -vE "services=|make_environment=" | grep -q ".*="; then \
-		echo "Error: Only 'services' and 'make_environment' parameters are allowed. Use: make $(1) make_environment=dev services=\"svc\""; \
+	if echo "$$cmd_args" | grep -v "services=" | grep -q ".*="; then \
+		echo "Error: Only 'services' parameter is allowed. Please use: make $(1) services=\"service_name\""; \
 		exit 1; \
 	fi
 endef
-
 
 install-docker:
 	@./scripts/install-docker.sh
@@ -42,7 +31,6 @@ setup-webhook:
 reload-caddy:
 	@echo "Reloading caddy"
 	$(DOCKER_COMPOSE_COMMAND) exec -w /etc/caddy caddy caddy reload || true
-
 
 #used for validating service parameter in dev(to improve code clarity)
 pre-deploy:

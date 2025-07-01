@@ -1,0 +1,11 @@
+include:
+  - ./common/monitoring/docker-compose.yaml
+  - ./common/minio/docker-compose.yaml
+  - ./common/redis/docker-compose.redis.dev.yaml
+  - ./common/db/dev/docker-compose.db.dev.yaml
+  - ./common/rabbitmq/docker-compose.yaml
+  - ./common/kong/docker-compose.yaml
+  - ./common/hasura/docker-compose.yaml
+  - ./common/keycloak/docker-compose.yaml
+  - ./common/pgvector/docker-compose.yaml
+  - ./epic/docker-compose.yaml
