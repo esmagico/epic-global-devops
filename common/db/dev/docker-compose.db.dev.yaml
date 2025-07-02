@@ -68,4 +68,4 @@ volumes:
   db:
   db-ai:
   db-keycloak:
-  elemetry-db:
+  telemetry-db:
