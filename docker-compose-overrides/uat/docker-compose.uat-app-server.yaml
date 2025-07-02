@@ -1,0 +1,14 @@
+include:
+  - ./common/monitoring/uat/docker-compose.agents.yaml
+  - ./common/kong/docker-compose.yaml
+  - ./common/rabbitmq/docker-compose.yaml
+  - ./common/hasura/docker-compose.yaml
+  - ./common/keycloak/docker-compose.yaml
+  - ./epic/telemetry/docker-compose.yaml
+  - ./epic/context_service/docker-compose.yaml
+  - ./epic/epic_global_contracts/docker-compose.yaml
+  - ./epic/epic_main_website/docker-compose.yaml
+  - ./epic/epic_global_ai/docker-compose.yaml
+  - ./epic/image_service/docker-compose.yaml
+  - ./epic/epic_global_backend/docker-compose.yaml
+  - ./epic/epic_global_frontend/docker-compose.yaml
