@@ -1,5 +1,5 @@
 include:
-  - ./common/monitoring/dev/docker-compose.dev.monitoring.yaml
+  - ./common/monitoring/dev/docker-compose.monitoring.dev.yaml
   - ./common/minio/docker-compose.yaml
   - ./common/redis/docker-compose.redis.dev.yaml
   - ./common/db/dev/docker-compose.db.dev.yaml
