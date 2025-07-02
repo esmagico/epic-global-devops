@@ -7,7 +7,6 @@ include:
   - ./epic/telemetry/docker-compose.yaml
   - ./epic/context_service/docker-compose.yaml
   - ./epic/epic_global_contracts/docker-compose.yaml
-  - ./epic/epic_main_website/docker-compose.yaml
   - ./epic/epic_global_ai/docker-compose.yaml
   - ./epic/image_service/docker-compose.yaml
   - ./epic/epic_global_backend/docker-compose.yaml

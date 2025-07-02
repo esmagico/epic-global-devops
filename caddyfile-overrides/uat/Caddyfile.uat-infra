@@ -1,0 +1,2 @@
+import ./common/monitoring/uat/Caddyfile.core
+import ./common/minio/Caddyfile

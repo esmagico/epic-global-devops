@@ -1,5 +1,5 @@
 include:
-  - ./common/monitoring/uat/docker-compose.core-stack.yaml
+  - ./common/monitoring/uat/docker-compose.core.yaml
   - ./common/minio/docker-compose.yaml
   - ./common/redis/docker-compose.redis.uat.yaml
   - ./common/db/uat/docker-compose.db.uat.yaml
