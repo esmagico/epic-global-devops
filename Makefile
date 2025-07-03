@@ -1,10 +1,10 @@
-ifndef make_environment
-$(error Error: 'make_environment' is required. Use: make <target> make_environment=<env> services="svc1 svc2")
+ifndef env
+$(error Error: 'env' is required. Use: make <target> env=<env> services="svc1 svc2")
 endif
 
-# Compose override path: docker-compose-overrides/{UPPERCASE_ENV_DIR}/docker-compose.{make_environment}.yaml
-ENV_DIR := $(shell echo $(make_environment) | cut -d '-' -f 1 | tr '[:lower:]' '[:upper:]')
-OVERRIDE_FILE := docker-compose-overrides/$(ENV_DIR)/docker-compose.$(make_environment).yaml
+# Compose override path: docker-compose-overrides/{UPPERCASE_ENV_DIR}/docker-compose.{env}.yaml
+ENV_DIR := $(shell echo $(env) | cut -d '-' -f 1)
+OVERRIDE_FILE := docker-compose-overrides/$(ENV_DIR)/docker-compose.$(env).yaml
 
 FORCE_RECREATE_FLAG := $(if $(filter 1,$(ENABLE_FORCE_RECREATE)),--force-recreate,)
 REMOVE_ORPHANS_FLAG := $(if $(or $(services),$(filter 1,$(DISABLE_REMOVE_ORPHANS))),,--remove-orphans)
@@ -17,8 +17,8 @@ DOCKER_COMPOSE_COMMAND=docker compose $(REMOVE_ANSI_FLAG) -p epic \
 # Function to validate services parameter
 define validate_services
 	@cmd_args="$(MAKEOVERRIDES)"; \
-	if echo "$$cmd_args" | grep -vE "services=|make_environment=" | grep -q ".*="; then \
-		echo "Error: Only 'services' and 'make_environment' parameters are allowed. Use: make $(1) make_environment=dev services=\"svc\""; \
+	if echo "$$cmd_args" | grep -vE "services=|env=" | grep -q ".*="; then \
+		echo "Error: Only 'services' and 'env' parameters are allowed. Use: make $(1) env=dev services=\"svc\""; \
 		exit 1; \
 	fi
 endef

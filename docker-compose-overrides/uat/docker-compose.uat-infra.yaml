@@ -4,7 +4,19 @@ include:
   - ./common/redis/docker-compose.redis.uat.yaml
   - ./common/db/uat/docker-compose.db.uat.yaml
 
-  
+services:
+  caddy:
+    extends:
+      file: ./common/caddy/docker-compose.yaml
+      service: caddy
+    volumes:
+      - ./common:/etc/caddy/common
+      - ./caddyfile-overrides/dev/Caddyfile.dev:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+volumes:
+  caddy_data:
+  caddy_config:
 
 
 

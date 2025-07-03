@@ -11,3 +11,18 @@ include:
   - ./epic/image_service/docker-compose.yaml
   - ./epic/epic_global_backend/docker-compose.yaml
   - ./epic/epic_global_frontend/docker-compose.yaml
+
+services:
+  caddy:
+    extends:
+      file: ./common/caddy/docker-compose.yaml
+      service: caddy
+    volumes:
+      - ./common:/etc/caddy/common
+      - ./caddyfile-overrides/dev/Caddyfile.dev:/etc/caddy/Caddyfile
+      - caddy_data:/data
+      - caddy_config:/config
+      - ./epic:/etc/caddy/epic
+volumes:
+  caddy_data:
+  caddy_config:
