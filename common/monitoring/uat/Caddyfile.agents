@@ -1,1 +1,7 @@
-#context to be added 
+{$DOMAIN_SCHEME}://node-exporter.{$DOMAIN_NAME} {
+    reverse_proxy node-exporter:9100
+}
+
+{$DOMAIN_SCHEME}://cadvisor.{$DOMAIN_NAME} {
+    reverse_proxy cadvisor:9100
+}
