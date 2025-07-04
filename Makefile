@@ -102,4 +102,9 @@ build:
 git-pull: 
 	git pull
 
-.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull
+.DEFAULT_GOAL := __default
+__default:
+	@echo "Error: No target specified. Please specify a target explicitly (e.g., deploy, restart)."
+	@exit 1
+
+.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull __default
