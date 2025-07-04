@@ -18,11 +18,7 @@ services:
       file: ./common/caddy/docker-compose.yaml
       service: caddy
     volumes:
-      - ./common:/etc/caddy/common
-      - ./caddyfile-overrides/dev/Caddyfile.dev:/etc/caddy/Caddyfile
-      - caddy_data:/data
-      - caddy_config:/config
-      - ./epic:/etc/caddy/epic
+      - ./caddyfile-overrides/uat/Caddyfile.uat-app:/etc/caddy/Caddyfile
 volumes:
   caddy_data:
   caddy_config:
