@@ -1,8 +1,18 @@
-ifndef env
-$(error Error: 'env' is required. Use: make <target> env=<env> services="svc1 svc2")
+ifeq (,$(wildcard .env))
+  $(warning Warning: .env file not found)
+else ifndef env
+  # Extract env value from .env file
+  env := $(shell grep -E '^env=' .env | cut -d '=' -f2 | tr -d '"')
+  ifeq (,$(env))
+    $(warning Warning: env not found in .env)
+  endif
 endif
 
-# Compose override path: docker-compose-overrides/{UPPERCASE_ENV_DIR}/docker-compose.{env}.yaml
+ifndef env
+$(error Error: 'env' is required. Use: make <target> env=<env> services="svc1 svc2" or define env in .env)
+endif
+
+# Rest of the Makefile remains the same...
 ENV_DIR := $(shell echo $(env) | cut -d '-' -f 1)
 OVERRIDE_FILE := docker-compose-overrides/$(ENV_DIR)/docker-compose.$(env).yaml
 
