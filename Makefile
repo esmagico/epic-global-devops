@@ -12,7 +12,7 @@ ifndef env
 $(error Error: 'env' is required. Use: make <target> env=<env> services="svc1 svc2" or define env in .env)
 endif
 
-# Rest of the Makefile remains the same...
+# Compose override path: docker-compose-overrides/{UPPERCASE_ENV_DIR}/docker-compose.{env}.yaml
 ENV_DIR := $(shell echo $(env) | cut -d '-' -f 1)
 OVERRIDE_FILE := docker-compose-overrides/$(ENV_DIR)/docker-compose.$(env).yaml
 
