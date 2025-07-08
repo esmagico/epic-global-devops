@@ -4,8 +4,9 @@ services:
     restart: always
     volumes:
       - db:/var/lib/postgresql/data  
+      - ./postgres_conf/pg_hba.conf.template:/etc/postgresql/pg_hba.conf.template
+      - ./postgres_conf/custom-entrypoint.sh:/custom-entrypoint.sh      
       - ./postgres_conf/postgresql.conf:/etc/postgresql/postgresql.conf
-      - ./postgres_conf/pg_hba.conf:/etc/postgresql/pg_hba.conf
       - ./postgres_conf/ssl/server.crt:/etc/postgresql/server.crt
       - ./postgres_conf/ssl/server.key:/etc/postgresql/server.key
     healthcheck:
@@ -15,30 +16,13 @@ services:
       retries: 5
     ports:
       - 5432:5432
-    command:
-             - "postgres"
-             - "-c"
-             - "config_file=/etc/postgresql/postgresql.conf"
+    entrypoint: ["/custom-entrypoint.sh"]
+    command: ["-c", "config_file=/etc/postgresql/postgresql.conf"]
     environment:
       POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
       POSTGRES_DB: ${POSTGRES_DB:?POSTGRES_DB is not set}
-      PG_MAX_CONNECTIONS: 1000   # to test we are putting 1000 
-  telemetry-db:
-    image: postgres:17.2
-    restart: always
-    volumes:
-      - telemetry-db:/var/lib/postgresql/data
-    healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
-      interval: 5s
-      timeout: 5s
-      retries: 5
-    environment:
-      POSTGRES_USER: ${TELEMETRY_DB_USER:?TELEMETRY_DB_USER is not set}
-      POSTGRES_PASSWORD: ${TELEMETRY_DB_PASSWORD:?TELEMETRY_DB_PASSWORD is not set}
-      POSTGRES_DB: ${TELEMETRY_DB:?TELEMETRY_DB is not set}
+      BACKEND_VM_IP: ${BACKEND_VM_IP:?BACKEND_VM_IP is not set}
 
 volumes:
   db:
-  telemetry-db:

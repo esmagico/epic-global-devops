@@ -2,3 +2,11 @@
 **/env.tmp
 deploy.log
 scripts/webhook/hooks.json
+common/redis/certs
+common/redis/certs/ca.srl
+common/redis/certs/ca.key
+common/redis/certs/redis.csr
+common/redis/certs/redis.key
+common/redis/certs/ca.crt
+common/redis/certs/redis.crt
+common/db/uat/postgres_conf/ssl/

@@ -1,6 +1,7 @@
 services:
   redis_backend:
     image: redis:latest
+    user: "1001"
     restart: always
     command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
     volumes:

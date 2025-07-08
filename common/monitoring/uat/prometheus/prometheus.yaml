@@ -8,7 +8,7 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets:
-        - 'node-exporter.epic.uat.esmagico.in'
+        - 'node-exporter.epic.uat.app.esmagico.in'
   
   - job_name: 'cadvisor'
     scrape_interval: 15s
@@ -18,13 +18,13 @@ scrape_configs:
       insecure_skip_verify: true
     static_configs:
       - targets: 
-        - 'cadvisor.epic.uat.esmagico.in'
+        - 'cadvisor.epic.uat.app.esmagico.in'
   
   - job_name: 'kong'
     scrape_interval: 5s
     scheme: https
     metrics_path: /metrics
     static_configs:
-      - targets: ['kong-admin.epic.uat.esmagico.in']
+      - targets: ['kong-admin.epic.uat.app.esmagico.in']
     tls_config:
       insecure_skip_verify: true
