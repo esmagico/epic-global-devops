@@ -3,12 +3,13 @@ include:
   - ./common/kong/docker-compose.yaml
   - ./common/rabbitmq/docker-compose.yaml
   - ./common/keycloak/docker-compose.yaml
-  # - ./epic/context_service/docker-compose.yaml
-  # - ./epic/epic_global_contracts/docker-compose.yaml
-  # - ./epic/epic_global_ai/docker-compose.yaml
-  # - ./epic/image_service/docker-compose.yaml
-  # - ./epic/epic_global_backend/docker-compose.yaml
-  # - ./epic/epic_global_frontend/docker-compose.yaml
+  - ./common/db-keycloak/docker-compose.yaml
+  - ./epic/context_service/docker-compose.yaml
+  - ./epic/epic_global_contracts/docker-compose.yaml
+  - ./epic/epic_global_ai/docker-compose.yaml
+  - ./epic/image_service/docker-compose.yaml
+  - ./epic/epic_global_backend/docker-compose.yaml
+  - ./epic/epic_global_frontend/docker-compose.yaml
 
 services:
   caddy:
@@ -16,7 +17,7 @@ services:
       file: ./common/caddy/docker-compose.yaml
       service: caddy
     volumes:
-      - ./caddyfile-overrides/uat/Caddyfile.uat:/etc/caddy/Caddyfile
+      - ./caddyfile-overrides/uat/Caddyfile.uat-app:/etc/caddy/Caddyfile
 volumes:
   caddy_data:
   caddy_config:

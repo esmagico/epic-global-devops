@@ -1,6 +1,4 @@
 import ./common/monitoring/uat/Caddyfile.agents
-import ./common/minio/Caddyfile
-import ./common/hasura/Caddyfile
 import ./common/kong/Caddyfile
 import ./common/keycloak/Caddyfile
 import ./epic/epic_global_frontend/Caddyfile

@@ -1,0 +1,20 @@
+#This Db is to be migrated to statefull machine DB but using here due to JDBC failure 
+
+services:
+  db-keycloak:
+    image: postgres:17.2
+    restart: always
+    volumes:
+      - db-keycloak:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD", "pg_isready", "-U", "${POSTGRES_USER:?POSTGRES_USER is not set}", "-d", "${POSTGRES_DB_KEYCLOAK:?POSTGRES_DB_KEYCLOAK is not set}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:?POSTGRES_USER is not set}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
+      POSTGRES_DB: ${POSTGRES_DB_KEYCLOAK:?POSTGRES_DB_KEYCLOAK is not set}
+
+volumes:
+  db-keycloak:

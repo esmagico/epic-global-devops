@@ -27,7 +27,6 @@ services:
       command: celery -A app.celery_app.app worker --loglevel=info
       depends_on:
         - rabbitmq
-        - redis
       environment: *env-ai
         
 volumes:
