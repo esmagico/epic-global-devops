@@ -19,7 +19,7 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": 10,
+  "id": 2,
   "links": [],
   "panels": [
     {
@@ -227,7 +227,7 @@
             "uid": "PBFA97CFB590B2093"
           },
           "editorMode": "code",
-          "expr": "count(count(container_last_seen) by (name))",
+          "expr": "count((count(container_last_seen) by (name)))-1",
           "instant": false,
           "legendFormat": "__auto",
           "range": true,
@@ -412,8 +412,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -513,8 +512,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -852,6 +850,6 @@
   "timezone": "",
   "title": "Container Metrics Overview",
   "uid": "pMEd7m0Mz",
-  "version": 3,
+  "version": 1,
   "weekStart": ""
 }
