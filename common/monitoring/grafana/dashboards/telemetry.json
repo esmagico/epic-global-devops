@@ -1,35 +1,4 @@
 {
-  "__inputs": [
-    {
-      "name": "DS_TELEMETRY_DATASOURCE",
-      "label": "Telemetry Datasource",
-      "description": "",
-      "type": "datasource",
-      "pluginId": "grafana-postgresql-datasource",
-      "pluginName": "PostgreSQL"
-    }
-  ],
-  "__elements": {},
-  "__requires": [
-    {
-      "type": "grafana",
-      "id": "grafana",
-      "name": "Grafana",
-      "version": "11.3.2"
-    },
-    {
-      "type": "datasource",
-      "id": "grafana-postgresql-datasource",
-      "name": "PostgreSQL",
-      "version": "1.0.0"
-    },
-    {
-      "type": "panel",
-      "id": "table",
-      "name": "Table",
-      "version": ""
-    }
-  ],
   "annotations": {
     "list": [
       {
@@ -50,13 +19,13 @@
   "editable": true,
   "fiscalYearStartMonth": 0,
   "graphTooltip": 0,
-  "id": null,
+  "id": 4,
   "links": [],
   "panels": [
     {
       "datasource": {
         "type": "grafana-postgresql-datasource",
-        "uid": "${DS_TELEMETRY_DATASOURCE}"
+        "uid": "feqpffu5apwqoa"
       },
       "fieldConfig": {
         "defaults": {
@@ -76,8 +45,7 @@
             "mode": "absolute",
             "steps": [
               {
-                "color": "green",
-                "value": null
+                "color": "green"
               },
               {
                 "color": "red",
@@ -123,17 +91,17 @@
         "showHeader": true,
         "sortBy": []
       },
-      "pluginVersion": "11.3.2",
+      "pluginVersion": "12.0.2",
       "targets": [
         {
           "datasource": {
             "type": "grafana-postgresql-datasource",
-            "uid": "${DS_TELEMETRY_DATASOURCE}"
+            "uid": "feqpffu5apwqoa"
           },
           "editorMode": "code",
           "format": "table",
           "rawQuery": true,
-          "rawSql": "SELECT \n  event_id,\n  event_name,\n  event_data,\n  event_type AS event_status,\nTO_CHAR(timestamp AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata', 'YYYY-MM-DD HH24:MI:SS') AS readable_timestamp\nFROM events\nWHERE u_id = '$mfn_sku'\nORDER BY timestamp DESC;\n",
+          "rawSql": "select event_id, u_id, event_name, event_type, event_data, timestamp from events where u_id='$mfn_sku' order by timestamp desc;",
           "refId": "A",
           "sql": {
             "columns": [
@@ -190,7 +158,8 @@
       "type": "table"
     }
   ],
-  "schemaVersion": 40,
+  "preload": false,
+  "schemaVersion": 41,
   "tags": [],
   "templating": {
     "list": [
@@ -209,7 +178,7 @@
             "value": "2"
           }
         ],
-        "query": "2",
+        "query": "KN-6KZM-GT1K1_200",
         "type": "textbox"
       }
     ]
@@ -222,6 +191,5 @@
   "timezone": "browser",
   "title": "Telemetry",
   "uid": "aegeziz2zi0w0e",
-  "version": 14,
-  "weekStart": ""
+  "version": 3
 }
