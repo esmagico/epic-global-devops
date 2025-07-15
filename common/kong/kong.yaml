@@ -803,6 +803,9 @@ services:
 # Image Service Routes
   - name: image_service
     url: http://image_service:5000
+    connect_timeout: 180000
+    read_timeout: 180000
+    write_timeout: 180000     
     routes:
       - name: image_service_root
         expression: 'http.path ~ "^/images$"'
