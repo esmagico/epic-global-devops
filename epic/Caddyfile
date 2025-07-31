@@ -4,3 +4,6 @@ import ./epic_main_website/Caddyfile
 
 #added for bullboard 
 import ./epic_global_backend/Caddyfile
+
+#for image service testing
+import ./image_service/Caddyfile

@@ -27,6 +27,10 @@ migrate-volume:
 	
 setup-webhook:
 	@./scripts/webhook/setup-webhook.sh
+
+check-env:
+	@echo "🔍 Running environment variable checks..."
+	@python3 scripts/env_checker.py
 	
 reload-caddy:
 	@echo "Reloading caddy"
@@ -80,4 +84,4 @@ build:
 git-pull: 
 	git pull
 
-.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull
+.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull check-env
