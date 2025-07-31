@@ -19,15 +19,18 @@ services:
         AI_SERVICE_SWAGGER_USER: ${AI_SERVICE_SWAGGER_USER:?AI_SERVICE_SWAGGER_USER is not set}
         AI_SERVICE_TELEMETRY_URI: ${AI_SERVICE_TELEMETRY_URI:?AI_SERVICE_TELEMETRY_URI is not set}
         AI_SERVICE_CONTEXT_API_KEY: ${AI_SERVICE_CONTEXT_API_KEY:?AI_SERVICE_CONTEXT_API_KEY is not set}
+        AI_SERVICE_CACHE_URL: ${AI_SERVICE_CACHE_URL}
+        AI_SERVICE_CACHE_TLS_ENABLED: ${AI_SERVICE_CACHE_TLS_ENABLED}
+        AI_SERVICE_CACHE_TLS_CA: ${AI_SERVICE_CACHE_TLS_CA}
+        AI_SERVICE_CACHE_EXPIRY_SECONDS: ${AI_SERVICE_CACHE_EXPIRY_SECONDS}
+
   
-  # ToDo: Figure out a way to dockerize celery in a proper way.
   celery:
       image: ghcr.io/${org}/epic-global-ai-services:${EPIC_GLOBAL_AI_IMAGE_TAG:-${DEFAULT_IMAGE_TAG:?DEFAULT_IMAGE_TAG is not set}}
       restart: always
       command: celery -A app.celery_app.app worker --loglevel=info
       depends_on:
         - rabbitmq
-        - redis
       environment: *env-ai
         
 volumes:

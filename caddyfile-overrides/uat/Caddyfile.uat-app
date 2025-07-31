@@ -1,0 +1,8 @@
+import ./common/monitoring/uat/Caddyfile.agents
+import ./common/kong/Caddyfile
+import ./common/keycloak/Caddyfile
+import ./epic/epic_global_frontend/Caddyfile
+import ./epic/epic_global_contracts/Caddyfile
+#added for bullboard 
+import ./epic/epic_global_backend/Caddyfile
+import ./common/hasura/Caddyfile

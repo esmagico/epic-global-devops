@@ -1,23 +1,8 @@
-include:
-  - ./common/monitoring/docker-compose.yaml
-  - ./common/minio/docker-compose.yaml
-  - ./common/redis/docker-compose.yaml
-  - ./common/db/dev/docker-compose.db.dev.yaml
-  - ./common/rabbitmq/docker-compose.yaml
-  - ./common/kong/docker-compose.yaml
-  - ./common/hasura/docker-compose.yaml
-  - ./common/keycloak/docker-compose.yaml
-  - ./common/pgvector/docker-compose.yaml
-  - ./epic/docker-compose.yaml
-
 services:
   caddy:
     extends:
-      file: common/caddy/docker-compose.yaml
+      file: ./common/caddy/docker-compose.yaml
       service: caddy
     volumes:
-     - ./epic:/etc/caddy/epic
+      - ./epic:/etc/caddy/epic
 
-volumes:
-  caddy_data:
-  caddy_config:
