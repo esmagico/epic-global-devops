@@ -43,8 +43,9 @@ In general every project requires observability, ci/cd pipelines, environment ma
 7. Run `make install-docker` to install docker
 8. Exit out of VM and re-connect to the VM to reflect the latest user changes
 9. Run `make setup-daemon` to configure the docker daemon
-10. Run `sudo make setup-webhook` to start the webhook service (use `kill -9 $(lsof -t -i:9000)` to kill any existing service on 9000 port)
-11. Run `make deploy` to deploy all the services
+10. Run `make setup-security` to install security audit tools (requires `GITHUB_PAT` in .env file)
+11. Run `sudo make setup-webhook` to start the webhook service (use `kill -9 $(lsof -t -i:9000)` to kill any existing service on 9000 port)
+12. Run `make deploy` to deploy all the services
 
 ## Setting up Github Action for CD
 

@@ -49,6 +49,9 @@ migrate-volume:
 setup-webhook:
 	@./scripts/webhook/setup-webhook.sh
 
+setup-security:
+	@./scripts/setup-security.sh
+
 check-env:
 	@echo "🔍 Running environment variable checks..."
 	@python3 scripts/env_checker.py
@@ -111,4 +114,4 @@ __default:
 	@echo "Error: No target specified. Please specify a target explicitly (e.g., deploy, restart)."
 	@exit 1
 
-.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull __default
+.PHONY: deploy pre-deploy restart stop down pull build safe-pull safe-build reload-caddy git-pull setup-security __default
