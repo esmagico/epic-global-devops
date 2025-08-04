@@ -26,6 +26,9 @@ services:
       MILVUS_HOST: ${MILVUS_HOST:?MILVUS_HOST is not set}
       MILVUS_PORT: ${MILVUS_PORT:?MILVUS_PORT is not set}
     command: ["milvus", "run", "standalone"]
+    depends_on:
+     - etcd
+     - minio
     volumes:
       - milvus_data:/var/lib/milvus
     healthcheck:
