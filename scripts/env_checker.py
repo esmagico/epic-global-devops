@@ -25,9 +25,11 @@ def check_password_strength(password):
 def main():
     if not os.path.isfile(ENV_PATH):
         print(f"❌ File not found: {ENV_PATH}")
-        return
+        return 1
 
     print(f"🔍 Checking sensitive values in {ENV_PATH}...\n")
+    
+    weak_passwords_found = False
 
     with open(ENV_PATH) as f:
         for line in f:
@@ -57,8 +59,16 @@ def main():
                     if feedback.get("suggestions"):
                         for suggestion in feedback["suggestions"]:
                             print(f"   💡 {suggestion}")
+                    weak_passwords_found = True
                 else:
                     print(f"✅ {key} looks strong enough (score {score}/4)")
+    
+    if weak_passwords_found:
+        print(f"\n❌ Deployment blocked: Weak passwords found. Please strengthen passwords before deploying.")
+        return 1
+    else:
+        print(f"\n✅ All sensitive values meet security requirements.")
+        return 0
 
 if __name__ == "__main__":
-    main()
+    exit(main())

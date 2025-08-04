@@ -65,7 +65,7 @@ reload-caddy:
 pre-deploy:
 	$(call validate_services,deploy)
 
-deploy: pre-deploy $(if $(filter 1,$(ENABLE_GIT_PULL)),git-pull,) $(if $(filter 1,$(DISABLE_PULL)),,pull build) reload-caddy
+deploy: pre-deploy check-env $(if $(filter 1,$(ENABLE_GIT_PULL)),git-pull,) $(if $(filter 1,$(DISABLE_PULL)),,pull build) reload-caddy
 	@if [ -z "$(services)" ]; then \
 		echo "Notice: No services specified. Deploying all services."; \
 	fi
