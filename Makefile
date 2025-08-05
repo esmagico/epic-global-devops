@@ -85,9 +85,16 @@ stop:
 down:
 	$(call validate_services,down)
 	@if [ -z "$(services)" ]; then \
-		echo "Notice: No services specified. Bringing down all services."; \
+		echo "Error: 'services' parameter is required. Use 'all' to bring down everything: make down services=all"; \
+		exit 1; \
+	elif [ "$(services)" = "all" ]; then \
+		echo "Bringing down all services"; \
+		$(DOCKER_COMPOSE_COMMAND) down; \
+	else \
+		echo "Stopping and removing services: $(services)"; \
+		$(DOCKER_COMPOSE_COMMAND) stop $(services); \
+		$(DOCKER_COMPOSE_COMMAND) rm -f $(services); \
 	fi
-	$(DOCKER_COMPOSE_COMMAND) down $(services)
 	
 pull:
 	$(call validate_services,pull)
