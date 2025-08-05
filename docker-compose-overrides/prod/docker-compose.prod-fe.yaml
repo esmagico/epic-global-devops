@@ -1,0 +1,14 @@
+include:
+  - ./common/monitoring/prod/docker-compose.agents.yaml
+  - ./epic/epic_global_frontend/docker-compose.yaml
+
+services:
+  caddy:
+    extends:
+      file: ./common/caddy/docker-compose.yaml
+      service: caddy
+    volumes:
+      - ./caddyfile-overrides/prod/Caddyfile.prod-fe:/etc/caddy/Caddyfile
+volumes:
+  caddy_data:
+  caddy_config:
