@@ -1,5 +1,6 @@
 include:
   - ./common/monitoring/prod/docker-compose.core-stack.yaml
+  - ./common/minio/docker-compose.yaml
 
 services:
   caddy:
@@ -7,7 +8,7 @@ services:
       file: ./common/caddy/docker-compose.yaml
       service: caddy
     volumes:
-      - ./caddyfile-overrides/prod/Caddyfile.prod-infra:/etc/caddy/Caddyfile
+      - ./caddyfile-overrides/prod/Caddyfile.prod-monitoring:/etc/caddy/Caddyfile
 volumes:
   caddy_data:
   caddy_config:

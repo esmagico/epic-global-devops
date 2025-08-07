@@ -1,1 +1,2 @@
 import ./common/monitoring/prod/Caddyfile.core
+import ./common/minio/Caddyfile

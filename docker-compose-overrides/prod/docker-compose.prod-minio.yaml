@@ -1,5 +1,6 @@
 include:
   - ./common/minio/docker-compose.yaml
+  - ./common/monitoring/prod/docker-compose.agents.yaml
 
 services:
   caddy:
