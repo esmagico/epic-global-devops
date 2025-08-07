@@ -1,4 +1,7 @@
 import ./common/monitoring/prod/Caddyfile.agents
+import ./common/kong/Caddyfile
+import ./common/keycloak/Caddyfile
+import ./common/rabbitmq/Caddyfile
 import ./epic/epic_global_contracts/Caddyfile
 import ./epic/epic_global_backend/Caddyfile
 import ./epic/epic_global_ai/Caddyfile
