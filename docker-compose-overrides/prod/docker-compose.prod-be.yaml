@@ -2,9 +2,8 @@ include:
   - ./common/monitoring/prod/docker-compose.agents.yaml
   - ./common/kong/docker-compose.yaml
   - ./common/rabbitmq/docker-compose.yaml
-  - ./common/keycloak/docker-compose.yaml
-  - ./common/db-keycloak/docker-compose.yaml # To be reviewed by Srijan
-  - ./common/hasura/docker-compose.yaml
+  - ./common/keycloak/docker-compose.prod.yaml
+  - ./common/db-keycloak/docker-compose.prod-dbkeycloak.yaml
   - ./epic/context_service/docker-compose.yaml
   - ./epic/epic_global_contracts/docker-compose.yaml
   - ./epic/epic_global_ai/docker-compose.yaml

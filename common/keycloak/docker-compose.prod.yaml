@@ -1,0 +1,21 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:23.0.7
+    restart: always
+    environment:
+      KC_DB: postgres
+      KC_DB_URL: jdbc:postgresql://db_keycloak:5432/keycloak
+      KC_DB_USERNAME: ${POSTGRES_USER:?POSTGRES_USER is not set}
+      KC_DB_PASSWORD: ${POSTGRES_PASSWORD:?POSTGRES_PASSWORD is not set}
+
+      KC_HOSTNAME: keycloak.${DOMAIN_NAME}
+      KC_HOSTNAME_STRICT: true
+      KC_PROXY: edge  # Required if behind a reverse proxy
+
+      KC_HTTP_ENABLED: true # Needed for reverse proxy  https://www.keycloak.org/server/reverseproxy
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: true
+      
+      KEYCLOAK_ADMIN: ${KEYCLOAK_ADMIN:?KEYCLOAK_ADMIN is not set}
+      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD:?KEYCLOAK_ADMIN_PASSWORD is not set}
+    command: start
