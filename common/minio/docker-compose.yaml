@@ -18,7 +18,7 @@ services:
       - './kickstart.sh:/etc/minio/kickstart.sh'
     entrypoint: /etc/minio/kickstart.sh
     depends_on:
-      - minio
+      - minio_main
     environment:
       MINIO_HOST: http://minio:9000
       MINIO_ROOT_USER: ${MINIO_ROOT_USER}

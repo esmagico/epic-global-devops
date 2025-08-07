@@ -8,7 +8,7 @@ services:
     image: grafana/loki:2.9.5
     restart: always
     depends_on:
-      - minio
+      - minio_main
     volumes:
       - './loki/loki-config.yaml:/etc/loki/loki-config.yaml'
       - loki:/loki

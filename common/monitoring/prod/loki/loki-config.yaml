@@ -39,7 +39,7 @@ storage_config:
     cache_location: /loki/tsdb-cache
     shared_store: s3
   aws:
-    endpoint: http://minio:9000
+    endpoint: http://minio_main:9000
     s3forcepathstyle: true
     bucketnames: ${MINIO_LOKI_BUCKET}
     insecure: true
