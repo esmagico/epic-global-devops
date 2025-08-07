@@ -1,2 +1,2 @@
-import ./common/monitoring/prod/Caddyfile.agents
-import ./epic/image_service/Caddyfile
+#import ./common/monitoring/prod/Caddyfile.agents
+import ./epic/epic_main_website/Caddyfile

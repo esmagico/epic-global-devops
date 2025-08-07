@@ -1,5 +1,5 @@
 include:
-  - ./common/monitoring/prod/docker-compose.agents.yaml
+  # - ./common/monitoring/prod/docker-compose.agents.yaml
   - ./epic/epic_main_website/docker-compose.yaml
 
 services:
