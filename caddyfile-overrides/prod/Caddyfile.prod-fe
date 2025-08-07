@@ -1,6 +1,2 @@
 import ./common/monitoring/prod/Caddyfile.agents
-import ./epic/epic_global_contracts/Caddyfile
-import ./epic/epic_global_backend/Caddyfile
-import ./epic/epic_global_ai/Caddyfile
-import ./epic/context_service/Caddyfile
-import ./epic/image_service/Caddyfile
+import ./epic/epic_global_frontend/Caddyfile
