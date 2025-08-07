@@ -1,0 +1,2 @@
+include:
+  - ./common/db/prod/docker-compose.db.prod.yaml
